@@ -14,7 +14,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class Lovable_ZIP_Analyzer {
+class L2WP_ZIP_Analyzer {
     
     private $zip_path;
     private $extract_path;

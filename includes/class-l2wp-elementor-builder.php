@@ -14,7 +14,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class Lovable_Elementor_Builder {
+class L2WP_Elementor_Builder {
     
     private $analysis_result;
     private $css_data;

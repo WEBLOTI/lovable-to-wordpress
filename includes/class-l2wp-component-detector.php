@@ -14,7 +14,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class Lovable_Component_Detector {
+class L2WP_Component_Detector {
     
     private $mappings;
     private $detections;

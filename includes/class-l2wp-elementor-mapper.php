@@ -15,7 +15,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class Lovable_Elementor_Mapper {
+class L2WP_Elementor_Mapper {
     
     /**
      * Constructor

@@ -14,7 +14,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class Lovable_Dynamic_Tags {
+class L2WP_Dynamic_Tags {
     
     /**
      * Register dynamic tags

@@ -14,7 +14,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class Lovable_Plugin_Recommender {
+class L2WP_Plugin_Recommender {
     
     private $mappings;
     private $detections;

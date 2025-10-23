@@ -14,7 +14,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class Lovable_Asset_Loader {
+class L2WP_Asset_Loader {
     
     /**
      * Constructor

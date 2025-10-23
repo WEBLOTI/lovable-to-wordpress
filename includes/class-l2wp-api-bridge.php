@@ -14,7 +14,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class Lovable_API_Bridge {
+class L2WP_API_Bridge {
     
     /**
      * REST API namespace

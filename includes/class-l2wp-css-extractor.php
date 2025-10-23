@@ -14,7 +14,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class Lovable_CSS_Extractor {
+class L2WP_CSS_Extractor {
     
     private $css_content;
     private $extracted_data;

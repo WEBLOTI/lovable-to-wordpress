@@ -14,7 +14,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class Lovable_Export_Engine {
+class L2WP_Export_Engine {
     
     /**
      * Constructor
