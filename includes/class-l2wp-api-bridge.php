@@ -313,7 +313,7 @@ class Lovable_API_Bridge {
      * Get mapper configuration
      */
     public function get_mapper_config($request) {
-        $mapper_file = LOVABLE_TO_WORDPRESS_PLUGIN_DIR . 'mapper.json';
+        $mapper_file = L2WP_PLUGIN_DIR . 'mapper.json';
         
         if (!file_exists($mapper_file)) {
             // Return default mapper config
@@ -339,7 +339,7 @@ class Lovable_API_Bridge {
             return new WP_Error('no_mapper_data', __('No mapper data provided', 'lovable-to-wordpress'), array('status' => 400));
         }
         
-        $mapper_file = LOVABLE_TO_WORDPRESS_PLUGIN_DIR . 'mapper.json';
+        $mapper_file = L2WP_PLUGIN_DIR . 'mapper.json';
         
         // Validate JSON
         $json_data = json_encode($mapper_data, JSON_PRETTY_PRINT);

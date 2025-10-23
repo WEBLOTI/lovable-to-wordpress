@@ -48,7 +48,7 @@ class Lovable_Plugin_Recommender {
      * Load plugin mappings
      */
     private function load_mappings() {
-        $mappings_file = LOVABLE_TO_WORDPRESS_DIR . 'plugin-mappings.json';
+        $mappings_file = L2WP_PLUGIN_DIR . 'plugin-mappings.json';
         
         if (!file_exists($mappings_file)) {
             $this->mappings = array();

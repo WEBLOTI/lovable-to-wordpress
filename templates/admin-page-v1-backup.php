@@ -96,7 +96,7 @@ if (!defined('ABSPATH')) {
                     <li><?php _e('Export your design from Lovable as JSON', 'lovable-to-wordpress'); ?></li>
                     <li>
                         <?php _e('Validate your JSON using our tool:', 'lovable-to-wordpress'); ?>
-                        <a href="<?php echo plugins_url('test-json.php', LOVABLE_TO_WORDPRESS_PLUGIN_FILE); ?>" target="_blank" class="button button-secondary" style="margin-left: 10px;">
+                        <a href="<?php echo plugins_url('test-json.php', L2WP_PLUGIN_FILE); ?>" target="_blank" class="button button-secondary" style="margin-left: 10px;">
                             🔍 <?php _e('JSON Validator', 'lovable-to-wordpress'); ?>
                         </a>
                     </li>
@@ -303,7 +303,7 @@ if (!defined('ABSPATH')) {
             <div class="lovable-card">
                 <h3><?php _e('System Information', 'lovable-to-wordpress'); ?></h3>
                 <ul>
-                    <li><?php printf(__('Plugin Version: %s', 'lovable-to-wordpress'), LOVABLE_TO_WORDPRESS_VERSION); ?></li>
+                    <li><?php printf(__('Plugin Version: %s', 'lovable-to-wordpress'), L2WP_VERSION); ?></li>
                     <li><?php printf(__('WordPress Version: %s', 'lovable-to-wordpress'), get_bloginfo('version')); ?></li>
                     <li><?php printf(__('Elementor: %s', 'lovable-to-wordpress'), did_action('elementor/loaded') ? __('Active', 'lovable-to-wordpress') : __('Not Active', 'lovable-to-wordpress')); ?></li>
                     <li><?php printf(__('PHP Version: %s', 'lovable-to-wordpress'), PHP_VERSION); ?></li>

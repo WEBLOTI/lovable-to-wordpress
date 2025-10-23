@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<ruleset name="Lovable to WordPress">
+    <description>WordPress Coding Standards for Lovable to WordPress Plugin</description>
+
+    <!-- Files to scan -->
+    <file>.</file>
+
+    <!-- Exclude patterns -->
+    <exclude-pattern>vendor/*</exclude-pattern>
+    <exclude-pattern>node_modules/*</exclude-pattern>
+    <exclude-pattern>tests/*</exclude-pattern>
+    <exclude-pattern>languages/*</exclude-pattern>
+    <exclude-pattern>.git/*</exclude-pattern>
+    <exclude-pattern>*.min.js</exclude-pattern>
+    <exclude-pattern>*.min.css</exclude-pattern>
+
+    <!-- Use WordPress Coding Standards -->
+    <rule ref="WordPress">
+        <!-- Allow PHP tags configuration -->
+        <exclude name="WordPress.Files.FileName"/>
+        <!-- Allow plugin main file naming convention -->
+        <exclude name="WordPress.Files.FileName.NotHyphenatedLowercase"/>
+    </rule>
+
+    <!-- Prefixes configuration -->
+    <rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+        <properties>
+            <property name="prefixes" type="array">
+                <element value="l2wp"/>
+                <element value="L2WP"/>
+                <element value="lovable_to_wordpress"/>
+            </property>
+        </properties>
+    </rule>
+
+    <!-- Text domain configuration -->
+    <rule ref="WordPress.WP.I18n">
+        <properties>
+            <property name="text_domain" type="array">
+                <element value="lovable-to-wordpress"/>
+            </property>
+        </properties>
+    </rule>
+
+    <!-- REST API namespace prefix -->
+    <rule ref="WordPress.Security.NonceVerification">
+        <!-- We verify nonces properly in the code -->
+        <exclude name="WordPress.Security.NonceVerification.Recommended"/>
+    </rule>
+
+    <!-- Code complexity limits -->
+    <rule ref="WordPress">
+        <exclude name="Generic.Files.LineLength"/>
+    </rule>
+
+    <!-- Allow specific features for modern WordPress -->
+    <rule ref="WordPress">
+        <exclude name="WordPress.WP.GlobalVariablesOverride"/>
+    </rule>
+
+    <!-- Line length limit (increase to 120 for readability) -->
+    <rule ref="Generic.Files.LineLength">
+        <properties>
+            <property name="lineLimit" value="120"/>
+            <property name="absoluteLineLimit" value="200"/>
+        </properties>
+    </rule>
+
+    <!-- Arguments formatting -->
+    <rule ref="Generic.Functions.FunctionCallArgumentSpacing">
+        <properties>
+            <property name="requiredSpacesAfterOpen" value="0"/>
+            <property name="requiredSpacesBeforeClose" value="0"/>
+        </properties>
+    </rule>
+
+    <!-- Ignore comment warnings for now -->
+    <rule ref="WordPress">
+        <exclude name="WordPress.Files.FileName.NotHyphenatedLowercase"/>
+        <exclude name="Generic.Commenting.DocComment.MissingShort"/>
+    </rule>
+
+</ruleset>

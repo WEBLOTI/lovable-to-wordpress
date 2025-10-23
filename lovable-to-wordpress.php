@@ -20,11 +20,10 @@ if (!defined('ABSPATH')) {
 }
 
 // Define plugin constants
-define('LOVABLE_TO_WORDPRESS_VERSION', '1.0.0');
-define('LOVABLE_TO_WORDPRESS_PLUGIN_DIR', plugin_dir_path(__FILE__));
-define('LOVABLE_TO_WORDPRESS_DIR', plugin_dir_path(__FILE__)); // Alias for v2 classes
-define('LOVABLE_TO_WORDPRESS_PLUGIN_URL', plugin_dir_url(__FILE__));
-define('LOVABLE_TO_WORDPRESS_PLUGIN_FILE', __FILE__);
+define('L2WP_VERSION', '1.0.0');
+define('L2WP_PLUGIN_DIR', plugin_dir_path(__FILE__));
+define('L2WP_PLUGIN_URL', plugin_dir_url(__FILE__));
+define('L2WP_PLUGIN_FILE', __FILE__);
 
 /**
  * Main Lovable to WordPress Class
@@ -87,21 +86,21 @@ class L2WP_Main {
      */
     private function load_dependencies() {
         // Load functions
-        require_once LOVABLE_TO_WORDPRESS_PLUGIN_DIR . 'functions.php';
+        require_once L2WP_PLUGIN_DIR . 'functions.php';
 
         // Load includes (v1 - JSON based)
-        require_once LOVABLE_TO_WORDPRESS_PLUGIN_DIR . 'includes/class-api-bridge.php';
-        require_once LOVABLE_TO_WORDPRESS_PLUGIN_DIR . 'includes/class-export-engine.php';
-        require_once LOVABLE_TO_WORDPRESS_PLUGIN_DIR . 'includes/class-elementor-mapper.php';
-        require_once LOVABLE_TO_WORDPRESS_PLUGIN_DIR . 'includes/class-asset-loader.php';
-        require_once LOVABLE_TO_WORDPRESS_PLUGIN_DIR . 'includes/class-dynamic-tags.php';
+        require_once L2WP_PLUGIN_DIR . 'includes/class-l2wp-api-bridge.php';
+        require_once L2WP_PLUGIN_DIR . 'includes/class-l2wp-export-engine.php';
+        require_once L2WP_PLUGIN_DIR . 'includes/class-l2wp-elementor-mapper.php';
+        require_once L2WP_PLUGIN_DIR . 'includes/class-l2wp-asset-loader.php';
+        require_once L2WP_PLUGIN_DIR . 'includes/class-l2wp-dynamic-tags.php';
 
         // Load v2 includes (ZIP-based system with intelligent detection)
-        require_once LOVABLE_TO_WORDPRESS_PLUGIN_DIR . 'includes/class-zip-analyzer.php';
-        require_once LOVABLE_TO_WORDPRESS_PLUGIN_DIR . 'includes/class-component-detector.php';
-        require_once LOVABLE_TO_WORDPRESS_PLUGIN_DIR . 'includes/class-plugin-recommender.php';
-        require_once LOVABLE_TO_WORDPRESS_PLUGIN_DIR . 'includes/class-css-extractor.php';
-        require_once LOVABLE_TO_WORDPRESS_PLUGIN_DIR . 'includes/class-elementor-builder.php';
+        require_once L2WP_PLUGIN_DIR . 'includes/class-l2wp-zip-analyzer.php';
+        require_once L2WP_PLUGIN_DIR . 'includes/class-l2wp-component-detector.php';
+        require_once L2WP_PLUGIN_DIR . 'includes/class-l2wp-plugin-recommender.php';
+        require_once L2WP_PLUGIN_DIR . 'includes/class-l2wp-css-extractor.php';
+        require_once L2WP_PLUGIN_DIR . 'includes/class-l2wp-elementor-builder.php';
 
         // Initialize classes
         $this->init_classes();
@@ -112,11 +111,11 @@ class L2WP_Main {
      */
     private function init_classes() {
         // Initialize Export Engine (handles the form submission)
-        new Lovable_Export_Engine();
+        new L2WP_Export_Engine();
         
         // Initialize other classes as needed
-        // new Lovable_Asset_Loader();
-        // new Lovable_Elementor_Mapper();
+        // new L2WP_Asset_Loader();
+        // new L2WP_Elementor_Mapper();
     }
     
     /**
@@ -124,7 +123,7 @@ class L2WP_Main {
      */
     public function activate() {
         // Create default options
-        add_option('lovable_to_wordpress_version', LOVABLE_TO_WORDPRESS_VERSION);
+        add_option('lovable_to_wordpress_version', L2WP_VERSION);
         add_option('lovable_to_wordpress_settings', array(
             'animation_enabled' => true,
             'lazyload_enabled' => true,
@@ -150,18 +149,18 @@ class L2WP_Main {
         // Enqueue CSS
         wp_enqueue_style(
             'lovable-to-wordpress-styles',
-            LOVABLE_TO_WORDPRESS_PLUGIN_URL . 'assets/css/lovable.css',
+            L2WP_PLUGIN_URL . 'assets/css/lovable.css',
             array(),
-            LOVABLE_TO_WORDPRESS_VERSION,
+            L2WP_VERSION,
             'all'
         );
 
         // Enqueue JS (with defer)
         wp_enqueue_script(
             'lovable-to-wordpress-animations',
-            LOVABLE_TO_WORDPRESS_PLUGIN_URL . 'assets/js/lovable-animations.js',
+            L2WP_PLUGIN_URL . 'assets/js/lovable-animations.js',
             array(),
-            LOVABLE_TO_WORDPRESS_VERSION,
+            L2WP_VERSION,
             true
         );
 
@@ -182,9 +181,9 @@ class L2WP_Main {
     public function enqueue_editor_assets() {
         wp_enqueue_style(
             'lovable-to-wordpress-editor',
-            LOVABLE_TO_WORDPRESS_PLUGIN_URL . 'assets/css/lovable.css',
+            L2WP_PLUGIN_URL . 'assets/css/lovable.css',
             array(),
-            LOVABLE_TO_WORDPRESS_VERSION
+            L2WP_VERSION
         );
     }
     
@@ -217,14 +216,14 @@ class L2WP_Main {
      * Render admin page
      */
     public function render_admin_page() {
-        include LOVABLE_TO_WORDPRESS_PLUGIN_DIR . 'templates/admin-page.php';
+        include L2WP_PLUGIN_DIR . 'templates/admin-page.php';
     }
     
     /**
      * Register REST API routes
      */
     public function register_rest_routes() {
-        $api_bridge = new Lovable_API_Bridge();
+        $api_bridge = new L2WP_API_Bridge();
         $api_bridge->register_routes();
     }
     
@@ -233,14 +232,14 @@ class L2WP_Main {
      */
     public function register_elementor_widgets($widgets_manager) {
         // Register custom Elementor widgets if needed
-        // Example: $widgets_manager->register(new Lovable_Custom_Widget());
+        // Example: $widgets_manager->register(new L2WP_Custom_Widget());
     }
     
     /**
      * Register dynamic tags
      */
     public function register_dynamic_tags($dynamic_tags_manager) {
-        $dynamic_tags = new Lovable_Dynamic_Tags();
+        $dynamic_tags = new L2WP_Dynamic_Tags();
         $dynamic_tags->register($dynamic_tags_manager);
     }
     
@@ -275,7 +274,7 @@ class L2WP_Main {
         
         // Save preferences if requested
         if ($remember_preferences && !empty($plugin_choices)) {
-            $recommender = new Lovable_Plugin_Recommender();
+            $recommender = new L2WP_Plugin_Recommender();
             $recommender->save_preferences($plugin_choices);
         }
         

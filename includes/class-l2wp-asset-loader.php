@@ -35,9 +35,9 @@ class Lovable_Asset_Loader {
         // Enqueue main stylesheet
         wp_enqueue_style(
             'lovable-styles',
-            LOVABLE_TO_WORDPRESS_PLUGIN_URL . 'assets/css/lovable.css',
+            L2WP_PLUGIN_URL . 'assets/css/lovable.css',
             array(),
-            LOVABLE_TO_WORDPRESS_VERSION,
+            L2WP_VERSION,
             'all'
         );
         
@@ -45,9 +45,9 @@ class Lovable_Asset_Loader {
         if ($settings['animation_enabled'] ?? true) {
             wp_enqueue_script(
                 'lovable-animations',
-                LOVABLE_TO_WORDPRESS_PLUGIN_URL . 'assets/js/lovable-animations.js',
+                L2WP_PLUGIN_URL . 'assets/js/lovable-animations.js',
                 array(),
-                LOVABLE_TO_WORDPRESS_VERSION,
+                L2WP_VERSION,
                 true
             );
             
@@ -132,8 +132,8 @@ class Lovable_Asset_Loader {
      */
     public function preload_assets() {
         ?>
-        <link rel="preload" href="<?php echo LOVABLE_TO_WORDPRESS_PLUGIN_URL; ?>assets/css/lovable.css" as="style">
-        <link rel="preload" href="<?php echo LOVABLE_TO_WORDPRESS_PLUGIN_URL; ?>assets/js/lovable-animations.js" as="script">
+        <link rel="preload" href="<?php echo L2WP_PLUGIN_URL; ?>assets/css/lovable.css" as="style">
+        <link rel="preload" href="<?php echo L2WP_PLUGIN_URL; ?>assets/js/lovable-animations.js" as="script">
         <?php
     }
     
@@ -143,7 +143,7 @@ class Lovable_Asset_Loader {
      * @return string Critical CSS content
      */
     private function get_critical_css() {
-        $critical_css_file = LOVABLE_TO_WORDPRESS_PLUGIN_DIR . 'assets/css/critical.css';
+        $critical_css_file = L2WP_PLUGIN_DIR . 'assets/css/critical.css';
         
         if (file_exists($critical_css_file)) {
             return file_get_contents($critical_css_file);

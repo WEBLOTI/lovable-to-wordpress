@@ -713,7 +713,7 @@ class Lovable_Export_Engine {
         update_post_meta($template_id, '_elementor_template_type', $elementor_data['type']);
         update_post_meta($template_id, '_elementor_edit_mode', 'builder');
         update_post_meta($template_id, '_lovable_source', true);
-        update_post_meta($template_id, '_lovable_version', LOVABLE_TO_WORDPRESS_VERSION);
+        update_post_meta($template_id, '_lovable_version', L2WP_VERSION);
         
         return $template_id;
     }

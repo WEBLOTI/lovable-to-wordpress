@@ -30,12 +30,12 @@ if (isset($_POST['lovable_analyze_zip']) && isset($_FILES['lovable_zip'])) {
     
     if ($zip_file['error'] === UPLOAD_ERR_OK) {
         // Analyze ZIP
-        $analyzer = new Lovable_ZIP_Analyzer();
+        $analyzer = new L2WP_ZIP_Analyzer();
         $analysis_result = $analyzer->analyze($zip_file['tmp_name']);
         
         if (!is_wp_error($analysis_result)) {
             // Detect components
-            $detector = new Lovable_Component_Detector();
+            $detector = new L2WP_Component_Detector();
             $detections = $detector->detect($analysis_result);
             
             // Store in session for next step
@@ -166,7 +166,7 @@ if (!$analysis_result) {
                     <p class="description"><?php _e('Select which plugins to use for each detected functionality. You can choose between multiple options or skip.', 'lovable-to-wordpress'); ?></p>
                     
                     <?php 
-                    $recommender = new Lovable_Plugin_Recommender();
+                    $recommender = new L2WP_Plugin_Recommender();
                     
                     foreach ($detections as $functionality_key => $detection): 
                         $solutions = $recommender->get_solutions_for($functionality_key);
