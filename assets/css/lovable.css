@@ -1,0 +1,631 @@
+/**
+ * Lovable Exporter Styles
+ * 
+ * This file contains all CSS for Lovable animations, effects, and layouts
+ * Compatible with Elementor Free and Pro
+ * Optimized for performance with critical CSS approach
+ */
+
+/* === CRITICAL CSS - Above the fold === */
+
+/* Lovable Base Styles */
+.lovable-section,
+.lovable-column,
+.lovable-widget {
+    box-sizing: border-box;
+}
+
+.lovable-section {
+    position: relative;
+    width: 100%;
+}
+
+.lovable-column {
+    position: relative;
+    min-height: 1px;
+}
+
+.lovable-widget {
+    position: relative;
+}
+
+/* === ANIMATION BASE === */
+
+/* Hide elements before animation triggers */
+[data-lovable-anim]:not(.lovable-animated) {
+    opacity: 0;
+}
+
+/* Animated state */
+.lovable-animated {
+    opacity: 1;
+}
+
+/* === FADE ANIMATIONS === */
+
+/* Fade In */
+@keyframes lovableFadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.lovable-anim-fadeIn {
+    animation: lovableFadeIn 0.8s ease-in-out forwards;
+}
+
+/* Fade In Up */
+@keyframes lovableFadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.lovable-anim-fadeInUp {
+    animation: lovableFadeInUp 0.8s ease-out forwards;
+}
+
+/* Fade In Down */
+@keyframes lovableFadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.lovable-anim-fadeInDown {
+    animation: lovableFadeInDown 0.8s ease-out forwards;
+}
+
+/* Fade In Left */
+@keyframes lovableFadeInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.lovable-anim-fadeInLeft {
+    animation: lovableFadeInLeft 0.8s ease-out forwards;
+}
+
+/* Fade In Right */
+@keyframes lovableFadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.lovable-anim-fadeInRight {
+    animation: lovableFadeInRight 0.8s ease-out forwards;
+}
+
+/* === SCALE ANIMATIONS === */
+
+/* Scale Up */
+@keyframes lovableScaleUp {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.lovable-anim-scaleUp {
+    animation: lovableScaleUp 0.6s ease-out forwards;
+}
+
+/* Scale Down */
+@keyframes lovableScaleDown {
+    from {
+        opacity: 0;
+        transform: scale(1.2);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.lovable-anim-scaleDown {
+    animation: lovableScaleDown 0.6s ease-out forwards;
+}
+
+/* === SLIDE ANIMATIONS === */
+
+/* Slide In Up */
+@keyframes lovableSlideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.lovable-anim-slideInUp {
+    animation: lovableSlideInUp 0.8s ease-out forwards;
+}
+
+/* Slide In Down */
+@keyframes lovableSlideInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.lovable-anim-slideInDown {
+    animation: lovableSlideInDown 0.8s ease-out forwards;
+}
+
+/* Slide In Left */
+@keyframes lovableSlideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.lovable-anim-slideInLeft {
+    animation: lovableSlideInLeft 0.8s ease-out forwards;
+}
+
+/* Slide In Right */
+@keyframes lovableSlideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.lovable-anim-slideInRight {
+    animation: lovableSlideInRight 0.8s ease-out forwards;
+}
+
+/* === ROTATE ANIMATIONS === */
+
+/* Rotate In */
+@keyframes lovableRotateIn {
+    from {
+        opacity: 0;
+        transform: rotate(-180deg) scale(0.5);
+    }
+    to {
+        opacity: 1;
+        transform: rotate(0) scale(1);
+    }
+}
+
+.lovable-anim-rotateIn {
+    animation: lovableRotateIn 0.8s ease-out forwards;
+}
+
+/* === BOUNCE ANIMATIONS === */
+
+/* Bounce In */
+@keyframes lovableBounceIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.3);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.05);
+    }
+    70% {
+        transform: scale(0.9);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.lovable-anim-bounceIn {
+    animation: lovableBounceIn 0.8s ease-out forwards;
+}
+
+/* === FLIP ANIMATIONS === */
+
+/* Flip In X */
+@keyframes lovableFlipInX {
+    from {
+        opacity: 0;
+        transform: perspective(400px) rotateX(90deg);
+    }
+    to {
+        opacity: 1;
+        transform: perspective(400px) rotateX(0);
+    }
+}
+
+.lovable-anim-flipInX {
+    animation: lovableFlipInX 0.8s ease-out forwards;
+    backface-visibility: visible;
+}
+
+/* Flip In Y */
+@keyframes lovableFlipInY {
+    from {
+        opacity: 0;
+        transform: perspective(400px) rotateY(90deg);
+    }
+    to {
+        opacity: 1;
+        transform: perspective(400px) rotateY(0);
+    }
+}
+
+.lovable-anim-flipInY {
+    animation: lovableFlipInY 0.8s ease-out forwards;
+    backface-visibility: visible;
+}
+
+/* === ZOOM ANIMATIONS === */
+
+/* Zoom In */
+@keyframes lovableZoomIn {
+    from {
+        opacity: 0;
+        transform: scale3d(0.3, 0.3, 0.3);
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+.lovable-anim-zoomIn {
+    animation: lovableZoomIn 0.6s ease-out forwards;
+}
+
+/* === SPECIAL EFFECTS === */
+
+/* Blur In */
+@keyframes lovableBlurIn {
+    from {
+        opacity: 0;
+        filter: blur(10px);
+    }
+    to {
+        opacity: 1;
+        filter: blur(0);
+    }
+}
+
+.lovable-anim-blurIn {
+    animation: lovableBlurIn 0.8s ease-out forwards;
+}
+
+/* Glow Effect */
+@keyframes lovableGlow {
+    0%, 100% {
+        box-shadow: 0 0 5px rgba(var(--lovable-glow-color, 59, 130, 246), 0.5);
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(var(--lovable-glow-color, 59, 130, 246), 0.8);
+    }
+}
+
+.lovable-effect-glow {
+    animation: lovableGlow 2s ease-in-out infinite;
+}
+
+/* Pulse Effect */
+@keyframes lovablePulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+.lovable-effect-pulse {
+    animation: lovablePulse 2s ease-in-out infinite;
+}
+
+/* Shake Effect */
+@keyframes lovableShake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    10%, 30%, 50%, 70%, 90% {
+        transform: translateX(-5px);
+    }
+    20%, 40%, 60%, 80% {
+        transform: translateX(5px);
+    }
+}
+
+.lovable-effect-shake {
+    animation: lovableShake 0.5s ease-in-out;
+}
+
+/* === ANIMATION DELAYS === */
+
+.lovable-delay-100 {
+    animation-delay: 0.1s;
+}
+
+.lovable-delay-200 {
+    animation-delay: 0.2s;
+}
+
+.lovable-delay-300 {
+    animation-delay: 0.3s;
+}
+
+.lovable-delay-400 {
+    animation-delay: 0.4s;
+}
+
+.lovable-delay-500 {
+    animation-delay: 0.5s;
+}
+
+.lovable-delay-600 {
+    animation-delay: 0.6s;
+}
+
+.lovable-delay-800 {
+    animation-delay: 0.8s;
+}
+
+.lovable-delay-1000 {
+    animation-delay: 1s;
+}
+
+/* === ANIMATION DURATIONS === */
+
+.lovable-duration-fast {
+    animation-duration: 0.4s !important;
+}
+
+.lovable-duration-normal {
+    animation-duration: 0.8s !important;
+}
+
+.lovable-duration-slow {
+    animation-duration: 1.2s !important;
+}
+
+/* === DYNAMIC CONTENT STYLES === */
+
+/* Placeholder styles for dynamic content */
+.lovable-title,
+.lovable-heading {
+    margin: 0;
+    line-height: 1.2;
+}
+
+.lovable-text,
+.lovable-content {
+    line-height: 1.6;
+}
+
+.lovable-price {
+    font-weight: 600;
+    font-size: 1.2em;
+}
+
+.lovable-category,
+.lovable-tag {
+    display: inline-block;
+    padding: 0.25em 0.75em;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 3px;
+    margin-right: 0.5em;
+    margin-bottom: 0.5em;
+    font-size: 0.9em;
+}
+
+.lovable-image {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+.lovable-button {
+    display: inline-block;
+    padding: 0.75em 1.5em;
+    background: #3b82f6;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.lovable-button:hover {
+    background: #2563eb;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+/* === LOADING STATE === */
+
+.lovable-loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+/* Loading spinner */
+.lovable-spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    border-top-color: #3b82f6;
+    animation: lovableSpin 0.6s linear infinite;
+}
+
+@keyframes lovableSpin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* === RESPONSIVE UTILITIES === */
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+    /* Reduce animation complexity on mobile for performance */
+    .lovable-anim-flipInX,
+    .lovable-anim-flipInY,
+    .lovable-anim-rotateIn {
+        animation: lovableFadeIn 0.6s ease-out forwards;
+    }
+    
+    /* Smaller delays on mobile */
+    [class*="lovable-delay-"] {
+        animation-delay: 0.1s !important;
+    }
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    
+    [data-lovable-anim] {
+        opacity: 1 !important;
+    }
+}
+
+/* === ELEMENTOR COMPATIBILITY === */
+
+/* Ensure Lovable styles work within Elementor editor */
+.elementor-editor-active .lovable-animated,
+.elementor-editor-active [data-lovable-anim] {
+    opacity: 1 !important;
+}
+
+/* Elementor container compatibility */
+.e-con .lovable-section,
+.e-container .lovable-section {
+    width: 100%;
+}
+
+/* === LAZYLOAD SUPPORT === */
+
+/* Image lazyload placeholder */
+.lovable-image[data-src] {
+    background: #f3f4f6;
+    min-height: 200px;
+}
+
+.lovable-image.lazyloaded {
+    background: transparent;
+}
+
+/* === PERFORMANCE OPTIMIZATIONS === */
+
+/* GPU acceleration for animations */
+.lovable-animated,
+[data-lovable-anim] {
+    will-change: transform, opacity;
+}
+
+/* Remove will-change after animation completes */
+.lovable-animation-complete {
+    will-change: auto;
+}
+
+/* === CUSTOM PROPERTIES (CSS Variables) === */
+
+:root {
+    --lovable-primary-color: #3b82f6;
+    --lovable-secondary-color: #6366f1;
+    --lovable-text-color: #1f2937;
+    --lovable-border-radius: 8px;
+    --lovable-transition: all 0.3s ease;
+    --lovable-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --lovable-text-color: #f9fafb;
+    }
+}
+
+/* === UTILITY CLASSES === */
+
+.lovable-hidden {
+    display: none !important;
+}
+
+.lovable-visible {
+    display: block !important;
+}
+
+.lovable-text-center {
+    text-align: center;
+}
+
+.lovable-text-left {
+    text-align: left;
+}
+
+.lovable-text-right {
+    text-align: right;
+}
+
+.lovable-mt-1 { margin-top: 0.5rem; }
+.lovable-mt-2 { margin-top: 1rem; }
+.lovable-mt-3 { margin-top: 1.5rem; }
+.lovable-mt-4 { margin-top: 2rem; }
+
+.lovable-mb-1 { margin-bottom: 0.5rem; }
+.lovable-mb-2 { margin-bottom: 1rem; }
+.lovable-mb-3 { margin-bottom: 1.5rem; }
+.lovable-mb-4 { margin-bottom: 2rem; }
+
+.lovable-p-1 { padding: 0.5rem; }
+.lovable-p-2 { padding: 1rem; }
+.lovable-p-3 { padding: 1.5rem; }
+.lovable-p-4 { padding: 2rem; }

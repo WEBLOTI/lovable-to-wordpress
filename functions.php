@@ -1,0 +1,459 @@
+<?php
+/**
+ * Helper Functions for Lovable Exporter
+ * 
+ * This file contains utility functions for placeholder replacement,
+ * dynamic content mapping, and asset optimization.
+ */
+
+// Exit if accessed directly
+if (!defined('ABSPATH')) {
+    exit;
+}
+
+/**
+ * Replace placeholders in content with actual values
+ * 
+ * @param string $content Content with placeholders
+ * @param int $post_id Post ID for context
+ * @return string Processed content
+ */
+function lovable_replace_placeholders($content, $post_id = null) {
+    if (!$post_id) {
+        $post_id = get_the_ID();
+    }
+    
+    $post = get_post($post_id);
+    if (!$post) {
+        return $content;
+    }
+    
+    // Post placeholders
+    $placeholders = array(
+        '{{post.title}}' => get_the_title($post_id),
+        '{{post.content}}' => apply_filters('the_content', $post->post_content),
+        '{{post.excerpt}}' => get_the_excerpt($post_id),
+        '{{post.date}}' => get_the_date('', $post_id),
+        '{{post.author}}' => get_the_author_meta('display_name', $post->post_author),
+        '{{post.permalink}}' => get_permalink($post_id),
+        '{{post.thumbnail}}' => get_the_post_thumbnail_url($post_id, 'full'),
+    );
+    
+    // Replace post placeholders
+    $content = str_replace(array_keys($placeholders), array_values($placeholders), $content);
+    
+    // ACF placeholders (if ACF is active)
+    if (function_exists('get_field')) {
+        $content = lovable_replace_acf_placeholders($content, $post_id);
+    }
+    
+    // JetEngine placeholders (if JetEngine is active)
+    if (function_exists('jet_engine')) {
+        $content = lovable_replace_jetengine_placeholders($content, $post_id);
+    }
+    
+    // MetaBox placeholders (if MetaBox is active)
+    if (function_exists('rwmb_meta')) {
+        $content = lovable_replace_metabox_placeholders($content, $post_id);
+    }
+    
+    // Taxonomy placeholders
+    $content = lovable_replace_taxonomy_placeholders($content, $post_id);
+    
+    return $content;
+}
+
+/**
+ * Replace ACF placeholders
+ * 
+ * @param string $content Content with ACF placeholders
+ * @param int $post_id Post ID
+ * @return string Processed content
+ */
+function lovable_replace_acf_placeholders($content, $post_id) {
+    // Match {{acf.field_name}} pattern
+    preg_match_all('/\{\{acf\.([a-zA-Z0-9_-]+)\}\}/', $content, $matches);
+    
+    if (!empty($matches[1])) {
+        foreach ($matches[1] as $field_name) {
+            $field_value = get_field($field_name, $post_id);
+            
+            // Handle different field types
+            if (is_array($field_value)) {
+                $field_value = implode(', ', $field_value);
+            } elseif (is_object($field_value)) {
+                $field_value = json_encode($field_value);
+            }
+            
+            $content = str_replace("{{acf.{$field_name}}}", $field_value, $content);
+        }
+    }
+    
+    return $content;
+}
+
+/**
+ * Replace JetEngine placeholders
+ * 
+ * @param string $content Content with JetEngine placeholders
+ * @param int $post_id Post ID
+ * @return string Processed content
+ */
+function lovable_replace_jetengine_placeholders($content, $post_id) {
+    // Match {{jet.field_name}} pattern
+    preg_match_all('/\{\{jet\.([a-zA-Z0-9_-]+)\}\}/', $content, $matches);
+    
+    if (!empty($matches[1])) {
+        foreach ($matches[1] as $field_name) {
+            $field_value = get_post_meta($post_id, $field_name, true);
+            $content = str_replace("{{jet.{$field_name}}}", $field_value, $content);
+        }
+    }
+    
+    return $content;
+}
+
+/**
+ * Replace MetaBox placeholders
+ * 
+ * @param string $content Content with MetaBox placeholders
+ * @param int $post_id Post ID
+ * @return string Processed content
+ */
+function lovable_replace_metabox_placeholders($content, $post_id) {
+    // Match {{mb.field_name}} pattern
+    preg_match_all('/\{\{mb\.([a-zA-Z0-9_-]+)\}\}/', $content, $matches);
+    
+    if (!empty($matches[1])) {
+        foreach ($matches[1] as $field_name) {
+            $field_value = rwmb_meta($field_name, '', $post_id);
+            
+            if (is_array($field_value)) {
+                $field_value = implode(', ', $field_value);
+            }
+            
+            $content = str_replace("{{mb.{$field_name}}}", $field_value, $content);
+        }
+    }
+    
+    return $content;
+}
+
+/**
+ * Replace taxonomy placeholders
+ * 
+ * @param string $content Content with taxonomy placeholders
+ * @param int $post_id Post ID
+ * @return string Processed content
+ */
+function lovable_replace_taxonomy_placeholders($content, $post_id) {
+    // Match {{taxonomy.taxonomy_name}} pattern
+    preg_match_all('/\{\{taxonomy\.([a-zA-Z0-9_-]+)\}\}/', $content, $matches);
+    
+    if (!empty($matches[1])) {
+        foreach ($matches[1] as $taxonomy) {
+            $terms = get_the_terms($post_id, $taxonomy);
+            
+            if ($terms && !is_wp_error($terms)) {
+                $term_names = array_map(function($term) {
+                    return $term->name;
+                }, $terms);
+                
+                $content = str_replace("{{taxonomy.{$taxonomy}}}", implode(', ', $term_names), $content);
+            }
+        }
+    }
+    
+    return $content;
+}
+
+/**
+ * Get active custom fields plugin
+ * 
+ * @return string|false Plugin name or false
+ */
+function lovable_get_active_cpt_plugin() {
+    if (function_exists('get_field')) {
+        return 'acf';
+    } elseif (function_exists('jet_engine')) {
+        return 'jetengine';
+    } elseif (function_exists('rwmb_meta')) {
+        return 'metabox';
+    } elseif (function_exists('cptui_init')) {
+        return 'cptui';
+    }
+    
+    return false;
+}
+
+/**
+ * Get all custom post types
+ * 
+ * @return array Custom post types
+ */
+function lovable_get_custom_post_types() {
+    $args = array(
+        'public' => true,
+        '_builtin' => false,
+    );
+    
+    return get_post_types($args, 'objects');
+}
+
+/**
+ * Get all custom fields for a post type
+ * 
+ * @param string $post_type Post type name
+ * @return array Custom fields
+ */
+function lovable_get_custom_fields($post_type) {
+    $fields = array();
+    $plugin = lovable_get_active_cpt_plugin();
+    
+    switch ($plugin) {
+        case 'acf':
+            if (function_exists('acf_get_field_groups')) {
+                $groups = acf_get_field_groups(array('post_type' => $post_type));
+                foreach ($groups as $group) {
+                    $group_fields = acf_get_fields($group['key']);
+                    if ($group_fields) {
+                        $fields = array_merge($fields, $group_fields);
+                    }
+                }
+            }
+            break;
+            
+        case 'jetengine':
+            // JetEngine meta fields
+            if (class_exists('Jet_Engine_Meta_Boxes')) {
+                $meta_boxes = \Jet_Engine\Modules\Custom_Content_Types\Module::instance()->manager->get_item_for_edit($post_type);
+                if ($meta_boxes) {
+                    $fields = $meta_boxes['meta_fields'];
+                }
+            }
+            break;
+            
+        case 'metabox':
+            // MetaBox fields
+            if (function_exists('rwmb_get_registry')) {
+                $registry = rwmb_get_registry('meta_box');
+                $meta_boxes = $registry->get_by(array('object_type' => $post_type));
+                foreach ($meta_boxes as $meta_box) {
+                    if (isset($meta_box->meta_box['fields'])) {
+                        $fields = array_merge($fields, $meta_box->meta_box['fields']);
+                    }
+                }
+            }
+            break;
+    }
+    
+    return $fields;
+}
+
+/**
+ * Generate Elementor-compatible JSON from Lovable design
+ * 
+ * @param array $lovable_design Lovable design data
+ * @return array Elementor JSON structure
+ */
+function lovable_generate_elementor_json($lovable_design) {
+    $elementor_data = array(
+        'version' => '0.4',
+        'title' => $lovable_design['title'] ?? 'Lovable Design',
+        'type' => 'page',
+        'content' => array(),
+    );
+    
+    // Process each section from Lovable
+    if (!empty($lovable_design['sections'])) {
+        foreach ($lovable_design['sections'] as $section) {
+            $elementor_data['content'][] = lovable_convert_section_to_elementor($section);
+        }
+    }
+    
+    return $elementor_data;
+}
+
+/**
+ * Convert Lovable section to Elementor format
+ * 
+ * @param array $section Lovable section data
+ * @return array Elementor section structure
+ */
+function lovable_convert_section_to_elementor($section) {
+    return array(
+        'id' => uniqid(),
+        'elType' => 'section',
+        'settings' => array(
+            'layout' => $section['layout'] ?? 'boxed',
+            '_lovable_animation' => $section['animation'] ?? '',
+            'css_classes' => 'lovable-section ' . ($section['classes'] ?? ''),
+        ),
+        'elements' => lovable_convert_columns_to_elementor($section['columns'] ?? array()),
+    );
+}
+
+/**
+ * Convert Lovable columns to Elementor format
+ * 
+ * @param array $columns Lovable columns data
+ * @return array Elementor columns structure
+ */
+function lovable_convert_columns_to_elementor($columns) {
+    $elementor_columns = array();
+    
+    foreach ($columns as $column) {
+        $elementor_columns[] = array(
+            'id' => uniqid(),
+            'elType' => 'column',
+            'settings' => array(
+                '_column_size' => $column['width'] ?? 100,
+                'css_classes' => 'lovable-column ' . ($column['classes'] ?? ''),
+            ),
+            'elements' => lovable_convert_widgets_to_elementor($column['widgets'] ?? array()),
+        );
+    }
+    
+    return $elementor_columns;
+}
+
+/**
+ * Convert Lovable widgets to Elementor format
+ * 
+ * @param array $widgets Lovable widgets data
+ * @return array Elementor widgets structure
+ */
+function lovable_convert_widgets_to_elementor($widgets) {
+    $elementor_widgets = array();
+    
+    foreach ($widgets as $widget) {
+        $widget_type = lovable_map_widget_type($widget['type']);
+        
+        $elementor_widgets[] = array(
+            'id' => uniqid(),
+            'elType' => 'widget',
+            'widgetType' => $widget_type,
+            'settings' => lovable_map_widget_settings($widget),
+        );
+    }
+    
+    return $elementor_widgets;
+}
+
+/**
+ * Map Lovable widget type to Elementor widget type
+ * 
+ * @param string $lovable_type Lovable widget type
+ * @return string Elementor widget type
+ */
+function lovable_map_widget_type($lovable_type) {
+    $mapping = array(
+        'heading' => 'heading',
+        'text' => 'text-editor',
+        'image' => 'image',
+        'button' => 'button',
+        'divider' => 'divider',
+        'spacer' => 'spacer',
+        'icon' => 'icon',
+        'video' => 'video',
+    );
+    
+    return $mapping[$lovable_type] ?? 'text-editor';
+}
+
+/**
+ * Map Lovable widget settings to Elementor settings
+ * 
+ * @param array $widget Lovable widget data
+ * @return array Elementor settings
+ */
+function lovable_map_widget_settings($widget) {
+    $settings = array(
+        'css_classes' => 'lovable-widget ' . ($widget['classes'] ?? ''),
+        '_lovable_animation' => $widget['animation'] ?? '',
+    );
+    
+    // Add widget-specific settings
+    switch ($widget['type']) {
+        case 'heading':
+            $settings['title'] = $widget['content'] ?? '';
+            $settings['header_size'] = $widget['tag'] ?? 'h2';
+            break;
+            
+        case 'text':
+            $settings['editor'] = $widget['content'] ?? '';
+            break;
+            
+        case 'image':
+            $settings['image'] = array('url' => $widget['src'] ?? '');
+            $settings['image_size'] = 'full';
+            break;
+            
+        case 'button':
+            $settings['text'] = $widget['text'] ?? '';
+            $settings['link'] = array('url' => $widget['url'] ?? '#');
+            break;
+    }
+    
+    return $settings;
+}
+
+/**
+ * Sanitize animation name
+ * 
+ * @param string $animation Animation name
+ * @return string Sanitized animation name
+ */
+function lovable_sanitize_animation($animation) {
+    return sanitize_html_class($animation);
+}
+
+/**
+ * Check if Elementor is active
+ * 
+ * @return bool
+ */
+function lovable_is_elementor_active() {
+    return did_action('elementor/loaded');
+}
+
+/**
+ * Import Elementor template from JSON
+ * 
+ * @param string $json_file Path to JSON file
+ * @param string $title Template title
+ * @return int|WP_Error Template ID or error
+ */
+function lovable_import_elementor_template($json_file, $title = 'Lovable Template') {
+    if (!lovable_is_elementor_active()) {
+        return new WP_Error('elementor_not_active', __('Elementor is not active', 'lovable-exporter'));
+    }
+    
+    $json_content = file_get_contents($json_file);
+    if (!$json_content) {
+        return new WP_Error('file_not_found', __('Template file not found', 'lovable-exporter'));
+    }
+    
+    $template_data = json_decode($json_content, true);
+    if (!$template_data) {
+        return new WP_Error('invalid_json', __('Invalid JSON format', 'lovable-exporter'));
+    }
+    
+    // Create template post
+    $template_id = wp_insert_post(array(
+        'post_title' => $title,
+        'post_type' => 'elementor_library',
+        'post_status' => 'publish',
+    ));
+    
+    if (is_wp_error($template_id)) {
+        return $template_id;
+    }
+    
+    // Save template data
+    update_post_meta($template_id, '_elementor_data', wp_json_encode($template_data['content']));
+    update_post_meta($template_id, '_elementor_template_type', $template_data['type'] ?? 'page');
+    update_post_meta($template_id, '_elementor_edit_mode', 'builder');
+    
+    return $template_id;
+}

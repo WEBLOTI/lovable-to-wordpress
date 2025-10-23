@@ -1,0 +1,217 @@
+{
+  "version": "0.4",
+  "title": "Lovable Home Page",
+  "type": "page",
+  "content": [
+    {
+      "id": "hero-section",
+      "elType": "section",
+      "settings": {
+        "layout": "boxed",
+        "content_width": "full",
+        "gap": "default",
+        "height": "default",
+        "css_classes": "lovable-section",
+        "background_background": "gradient",
+        "background_color": "#6366f1",
+        "background_color_b": "#3b82f6",
+        "background_gradient_angle": 135
+      },
+      "elements": [
+        {
+          "id": "hero-column",
+          "elType": "column",
+          "settings": {
+            "_column_size": 100,
+            "css_classes": "lovable-column"
+          },
+          "elements": [
+            {
+              "id": "hero-heading",
+              "elType": "widget",
+              "widgetType": "heading",
+              "settings": {
+                "title": "{{post.title}}",
+                "header_size": "h1",
+                "align": "center",
+                "_css_classes": "lovable-widget",
+                "_lovable_animation": "fadeInDown",
+                "color": "#ffffff"
+              }
+            },
+            {
+              "id": "hero-text",
+              "elType": "widget",
+              "widgetType": "text-editor",
+              "settings": {
+                "editor": "{{post.excerpt}}",
+                "_css_classes": "lovable-widget",
+                "_lovable_animation": "fadeInUp",
+                "text_color": "#ffffff"
+              }
+            },
+            {
+              "id": "hero-button",
+              "elType": "widget",
+              "widgetType": "button",
+              "settings": {
+                "text": "Get Started",
+                "link": {
+                  "url": "#features"
+                },
+                "size": "lg",
+                "align": "center",
+                "_css_classes": "lovable-widget lovable-delay-300",
+                "_lovable_animation": "scaleUp"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "features-section",
+      "elType": "section",
+      "settings": {
+        "layout": "boxed",
+        "content_width": "boxed",
+        "gap": "default",
+        "css_classes": "lovable-section"
+      },
+      "elements": [
+        {
+          "id": "features-col-1",
+          "elType": "column",
+          "settings": {
+            "_column_size": 33,
+            "css_classes": "lovable-column"
+          },
+          "elements": [
+            {
+              "id": "feature-1-icon",
+              "elType": "widget",
+              "widgetType": "icon",
+              "settings": {
+                "icon": {
+                  "value": "fas fa-rocket"
+                },
+                "view": "default",
+                "_css_classes": "lovable-widget",
+                "_lovable_animation": "fadeInLeft"
+              }
+            },
+            {
+              "id": "feature-1-heading",
+              "elType": "widget",
+              "widgetType": "heading",
+              "settings": {
+                "title": "Fast Performance",
+                "header_size": "h3",
+                "_css_classes": "lovable-widget lovable-delay-100",
+                "_lovable_animation": "fadeInLeft"
+              }
+            },
+            {
+              "id": "feature-1-text",
+              "elType": "widget",
+              "widgetType": "text-editor",
+              "settings": {
+                "editor": "Lightning-fast load times with optimized animations and critical CSS.",
+                "_css_classes": "lovable-widget lovable-delay-200",
+                "_lovable_animation": "fadeInLeft"
+              }
+            }
+          ]
+        },
+        {
+          "id": "features-col-2",
+          "elType": "column",
+          "settings": {
+            "_column_size": 33,
+            "css_classes": "lovable-column"
+          },
+          "elements": [
+            {
+              "id": "feature-2-icon",
+              "elType": "widget",
+              "widgetType": "icon",
+              "settings": {
+                "icon": {
+                  "value": "fas fa-paint-brush"
+                },
+                "view": "default",
+                "_css_classes": "lovable-widget lovable-delay-100",
+                "_lovable_animation": "fadeInUp"
+              }
+            },
+            {
+              "id": "feature-2-heading",
+              "elType": "widget",
+              "widgetType": "heading",
+              "settings": {
+                "title": "Beautiful Animations",
+                "header_size": "h3",
+                "_css_classes": "lovable-widget lovable-delay-200",
+                "_lovable_animation": "fadeInUp"
+              }
+            },
+            {
+              "id": "feature-2-text",
+              "elType": "widget",
+              "widgetType": "text-editor",
+              "settings": {
+                "editor": "Smooth, professional animations that bring your content to life.",
+                "_css_classes": "lovable-widget lovable-delay-300",
+                "_lovable_animation": "fadeInUp"
+              }
+            }
+          ]
+        },
+        {
+          "id": "features-col-3",
+          "elType": "column",
+          "settings": {
+            "_column_size": 33,
+            "css_classes": "lovable-column"
+          },
+          "elements": [
+            {
+              "id": "feature-3-icon",
+              "elType": "widget",
+              "widgetType": "icon",
+              "settings": {
+                "icon": {
+                  "value": "fas fa-cogs"
+                },
+                "view": "default",
+                "_css_classes": "lovable-widget lovable-delay-200",
+                "_lovable_animation": "fadeInRight"
+              }
+            },
+            {
+              "id": "feature-3-heading",
+              "elType": "widget",
+              "widgetType": "heading",
+              "settings": {
+                "title": "Easy Customization",
+                "header_size": "h3",
+                "_css_classes": "lovable-widget lovable-delay-300",
+                "_lovable_animation": "fadeInRight"
+              }
+            },
+            {
+              "id": "feature-3-text",
+              "elType": "widget",
+              "widgetType": "text-editor",
+              "settings": {
+                "editor": "Fully editable with Elementor, no coding required.",
+                "_css_classes": "lovable-widget lovable-delay-400",
+                "_lovable_animation": "fadeInRight"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

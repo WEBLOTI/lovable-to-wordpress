@@ -1,0 +1,434 @@
+{
+  "functionality_mappings": {
+    "popup_modal": {
+      "name": "Popups/Modals",
+      "detector_patterns": [
+        "Dialog",
+        "Modal",
+        "Popover",
+        "AlertDialog",
+        "@radix-ui/react-dialog",
+        "@radix-ui/react-alert-dialog"
+      ],
+      "recommended_solutions": [
+        {
+          "name": "Elementor Pro Popup Builder",
+          "slug": "elementor-pro",
+          "provider": "Elementor",
+          "type": "native",
+          "free": false,
+          "compatibility": 98,
+          "features": [
+            "Visual builder integrado",
+            "Triggers avanzados (click, scroll, exit intent)",
+            "Conditions y display rules",
+            "Custom CSS & JS integrado"
+          ],
+          "conversion_method": "convert_to_elementor_popup",
+          "url": "https://elementor.com/features/popup-builder/",
+          "requires": "Elementor Pro"
+        },
+        {
+          "name": "JetPopup",
+          "slug": "jet-popup",
+          "provider": "Crocoblock",
+          "type": "plugin",
+          "free": false,
+          "compatibility": 95,
+          "features": [
+            "Visual builder",
+            "Triggers múltiples",
+            "Animaciones",
+            "Conditions"
+          ],
+          "conversion_method": "convert_to_jetpopup",
+          "url": "https://crocoblock.com/plugins/jetpopup/"
+        },
+        {
+          "name": "Popup Maker",
+          "slug": "popup-maker",
+          "provider": "Code Atlantic",
+          "type": "plugin",
+          "free": true,
+          "compatibility": 90,
+          "features": [
+            "7+ triggers",
+            "Exit intent",
+            "Cookies",
+            "Analytics"
+          ],
+          "conversion_method": "convert_to_popup_maker",
+          "url": "https://wordpress.org/plugins/popup-maker/"
+        },
+        {
+          "name": "Popup Anything",
+          "slug": "popup-anything-on-click",
+          "provider": "WP OnlineSupport",
+          "type": "plugin",
+          "free": true,
+          "compatibility": 85,
+          "features": [
+            "Shortcode based",
+            "Multiple triggers",
+            "Elementor compatible"
+          ],
+          "conversion_method": "convert_to_popup_anything",
+          "url": "https://wordpress.org/plugins/popup-anything-on-click/"
+        },
+        {
+          "name": "Custom HTML + JS",
+          "slug": "custom_html",
+          "provider": "Built-in",
+          "type": "native",
+          "free": true,
+          "compatibility": 80,
+          "features": [
+            "No dependencies",
+            "Fully customizable",
+            "Lightweight"
+          ],
+          "conversion_method": "convert_to_html_modal",
+          "requires": "Elementor HTML Widget"
+        }
+      ]
+    },
+    "forms": {
+      "name": "Forms",
+      "detector_patterns": [
+        "react-hook-form",
+        "<form",
+        "useForm",
+        "input type=\"submit\"",
+        "@hookform/resolvers"
+      ],
+      "recommended_solutions": [
+        {
+          "name": "JetFormBuilder",
+          "slug": "jetformbuilder",
+          "provider": "Crocoblock",
+          "type": "plugin",
+          "free": true,
+          "compatibility": 95,
+          "features": [
+            "Visual builder",
+            "Conditional logic",
+            "File uploads",
+            "Post creation"
+          ],
+          "conversion_method": "convert_to_jetformbuilder",
+          "url": "https://wordpress.org/plugins/jetformbuilder/"
+        },
+        {
+          "name": "Fluent Forms",
+          "slug": "fluentform",
+          "provider": "WP Fluent Forms",
+          "type": "plugin",
+          "free": true,
+          "compatibility": 90,
+          "features": [
+            "Drag & drop",
+            "Conditional fields",
+            "Multi-step",
+            "Email notifications"
+          ],
+          "conversion_method": "convert_to_fluentforms",
+          "url": "https://wordpress.org/plugins/fluentform/"
+        },
+        {
+          "name": "WPForms Lite",
+          "slug": "wpforms-lite",
+          "provider": "WPForms",
+          "type": "plugin",
+          "free": true,
+          "compatibility": 85,
+          "features": [
+            "Pre-built templates",
+            "Spam protection",
+            "Entry management"
+          ],
+          "conversion_method": "convert_to_wpforms",
+          "url": "https://wordpress.org/plugins/wpforms-lite/"
+        },
+        {
+          "name": "Contact Form 7",
+          "slug": "contact-form-7",
+          "provider": "Takayuki Miyoshi",
+          "type": "plugin",
+          "free": true,
+          "compatibility": 75,
+          "features": [
+            "Simple",
+            "Lightweight",
+            "Flexible"
+          ],
+          "conversion_method": "convert_to_cf7",
+          "url": "https://wordpress.org/plugins/contact-form-7/"
+        }
+      ]
+    },
+    "filters_search": {
+      "name": "Filters/Search",
+      "detector_patterns": [
+        "filter",
+        "search",
+        "useState.*filter",
+        "Select",
+        "Checkbox.*filter"
+      ],
+      "recommended_solutions": [
+        {
+          "name": "JetSmartFilters",
+          "slug": "jet-smart-filters",
+          "provider": "Crocoblock",
+          "type": "plugin",
+          "free": false,
+          "compatibility": 95,
+          "features": [
+            "AJAX filtering",
+            "Multiple providers",
+            "Custom taxonomies",
+            "Range filters"
+          ],
+          "conversion_method": "convert_to_jetsmartfilters",
+          "url": "https://crocoblock.com/plugins/jetsmartfilters/"
+        },
+        {
+          "name": "Search & Filter",
+          "slug": "search-filter",
+          "provider": "Code Amp",
+          "type": "plugin",
+          "free": true,
+          "compatibility": 80,
+          "features": [
+            "Simple setup",
+            "AJAX results",
+            "Custom fields"
+          ],
+          "conversion_method": "convert_to_searchfilter",
+          "url": "https://wordpress.org/plugins/search-filter/"
+        },
+        {
+          "name": "FacetWP",
+          "slug": "facetwp",
+          "provider": "FacetWP",
+          "type": "plugin",
+          "free": false,
+          "compatibility": 90,
+          "features": [
+            "Powerful filtering",
+            "Faceted search",
+            "Templates"
+          ],
+          "conversion_method": "convert_to_facetwp",
+          "url": "https://facetwp.com/"
+        }
+      ]
+    },
+    "cpt_dynamic": {
+      "name": "Custom Post Types",
+      "detector_patterns": [
+        "mockListings",
+        "listings",
+        "posts",
+        "data/"
+      ],
+      "recommended_solutions": [
+        {
+          "name": "JetEngine",
+          "slug": "jet-engine",
+          "provider": "Crocoblock",
+          "type": "plugin",
+          "free": false,
+          "compatibility": 95,
+          "features": [
+            "CPT Builder",
+            "Meta Fields",
+            "Dynamic Tags",
+            "Relations"
+          ],
+          "conversion_method": "create_jet_cpt",
+          "url": "https://crocoblock.com/plugins/jetengine/"
+        },
+        {
+          "name": "ACF (Advanced Custom Fields)",
+          "slug": "advanced-custom-fields",
+          "provider": "WP Engine",
+          "type": "plugin",
+          "free": true,
+          "compatibility": 90,
+          "features": [
+            "Custom fields",
+            "Field groups",
+            "Conditional logic",
+            "Popular"
+          ],
+          "conversion_method": "create_acf_fields",
+          "url": "https://wordpress.org/plugins/advanced-custom-fields/"
+        },
+        {
+          "name": "Meta Box",
+          "slug": "meta-box",
+          "provider": "Meta Box",
+          "type": "plugin",
+          "free": true,
+          "compatibility": 85,
+          "features": [
+            "Custom fields",
+            "Post types",
+            "Lightweight"
+          ],
+          "conversion_method": "create_metabox_fields",
+          "url": "https://wordpress.org/plugins/meta-box/"
+        },
+        {
+          "name": "Custom Post Type UI",
+          "slug": "custom-post-type-ui",
+          "provider": "WebDevStudios",
+          "type": "plugin",
+          "free": true,
+          "compatibility": 80,
+          "features": [
+            "CPT creation",
+            "Taxonomies",
+            "Simple interface"
+          ],
+          "conversion_method": "create_cptui",
+          "url": "https://wordpress.org/plugins/custom-post-type-ui/"
+        }
+      ]
+    },
+    "gallery": {
+      "name": "Image Gallery",
+      "detector_patterns": [
+        "Gallery",
+        "ImageGallery",
+        "Carousel",
+        "embla-carousel"
+      ],
+      "recommended_solutions": [
+        {
+          "name": "Elementor Gallery (Built-in)",
+          "slug": "elementor",
+          "provider": "Elementor",
+          "type": "native",
+          "free": true,
+          "compatibility": 90,
+          "features": [
+            "Gallery widget",
+            "Lightbox",
+            "Multiple layouts",
+            "Carousels"
+          ],
+          "conversion_method": "convert_to_elementor_gallery",
+          "requires": "Elementor (already required)"
+        },
+        {
+          "name": "JetElements Images Layout",
+          "slug": "jet-elements",
+          "provider": "Crocoblock",
+          "type": "plugin",
+          "free": false,
+          "compatibility": 92,
+          "features": [
+            "Images Layout Widget",
+            "Advanced styling",
+            "Multiple layout options",
+            "Lightbox integration"
+          ],
+          "conversion_method": "convert_to_jetelements_gallery",
+          "url": "https://crocoblock.com/plugins/jetelements/"
+        },
+        {
+          "name": "JetEngine Dynamic Gallery",
+          "slug": "jet-engine",
+          "provider": "Crocoblock",
+          "type": "plugin",
+          "free": false,
+          "compatibility": 95,
+          "features": [
+            "Dynamic gallery widget",
+            "Grid & Slider gallery",
+            "Custom fields integration",
+            "Advanced queries"
+          ],
+          "conversion_method": "convert_to_jetengine_gallery",
+          "url": "https://crocoblock.com/knowledge-base/jetengine/jetengine-dynamic-field-widget-grid-gallery-and-slider-gallery-options-overview/"
+        }
+      ]
+    },
+    "animations": {
+      "name": "Animations/Transitions",
+      "detector_patterns": [
+        "framer-motion",
+        "transition",
+        "animate",
+        "motion"
+      ],
+      "recommended_solutions": [
+        {
+          "name": "Elementor Pro Motion Effects",
+          "slug": "elementor-pro",
+          "provider": "Elementor",
+          "type": "native",
+          "free": false,
+          "compatibility": 95,
+          "features": [
+            "Advanced entrance animations",
+            "Scroll effects & parallax",
+            "Mouse tracking effects",
+            "Custom CSS animations"
+          ],
+          "conversion_method": "convert_to_elementor_pro_animations",
+          "url": "https://elementor.com/features/motion-effects/",
+          "requires": "Elementor Pro"
+        },
+        {
+          "name": "WPCode (Code Snippets)",
+          "slug": "insert-headers-and-footers",
+          "provider": "WPCode",
+          "type": "plugin",
+          "free": true,
+          "compatibility": 92,
+          "features": [
+            "Insert custom CSS/JS",
+            "Header & footer scripts",
+            "Code snippets manager",
+            "Conditional loading"
+          ],
+          "conversion_method": "convert_to_wpcode_animations",
+          "url": "https://wordpress.org/plugins/insert-headers-and-footers/"
+        },
+        {
+          "name": "Elementor Motion Effects (Built-in)",
+          "slug": "elementor",
+          "provider": "Elementor",
+          "type": "native",
+          "free": true,
+          "compatibility": 90,
+          "features": [
+            "Entrance animations",
+            "Scroll effects",
+            "Mouse effects"
+          ],
+          "conversion_method": "convert_to_elementor_animations",
+          "requires": "Elementor (already required)"
+        },
+        {
+          "name": "Custom CSS/JS Animations",
+          "slug": "custom_animations",
+          "provider": "Built-in",
+          "type": "native",
+          "free": true,
+          "compatibility": 85,
+          "features": [
+            "CSS transitions",
+            "Intersection Observer",
+            "Custom scripts"
+          ],
+          "conversion_method": "convert_to_css_animations",
+          "requires": "None"
+        }
+      ]
+    }
+  }
+}

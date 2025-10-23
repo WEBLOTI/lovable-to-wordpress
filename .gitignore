@@ -1,0 +1,50 @@
+# Dependencies
+node_modules/
+vendor/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+.editorconfig
+
+# Build
+dist/
+build/
+*.zip
+
+# WordPress
+wp-content/plugins/
+wp-content/themes/
+wp-content/uploads/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Test files
+test-*.php
+test-*.json
+
+# OS
+Thumbs.db
+*.bak
+
+# Local development
+local/
+.htaccess
+
+# Third-party
+composer.lock
+package-lock.json
+yarn.lock
