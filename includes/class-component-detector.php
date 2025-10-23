@@ -31,7 +31,7 @@ class Lovable_Component_Detector {
      * Load plugin mappings
      */
     private function load_mappings() {
-        $mappings_file = LOVABLE_EXPORTER_DIR . 'plugin-mappings.json';
+        $mappings_file = LOVABLE_TO_WORDPRESS_DIR . 'plugin-mappings.json';
         
         if (!file_exists($mappings_file)) {
             $this->mappings = array();

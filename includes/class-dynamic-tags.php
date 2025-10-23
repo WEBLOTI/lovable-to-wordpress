@@ -29,7 +29,7 @@ class Lovable_Dynamic_Tags {
         
         // Register tag group
         $dynamic_tags_manager->register_group('lovable', array(
-            'title' => __('Lovable Fields', 'lovable-exporter'),
+            'title' => __('Lovable Fields', 'lovable-to-wordpress'),
         ));
         
         // Register individual tags based on active plugins
@@ -94,7 +94,7 @@ if (class_exists('Elementor\Core\DynamicTags\Tag')) {
          * Get tag title
          */
         public function get_title() {
-            return __('Lovable Field', 'lovable-exporter');
+            return __('Lovable Field', 'lovable-to-wordpress');
         }
         
         /**
@@ -122,7 +122,7 @@ if (class_exists('Elementor\Core\DynamicTags\Tag')) {
             $this->add_control(
                 'field_name',
                 array(
-                    'label' => __('Field Name', 'lovable-exporter'),
+                    'label' => __('Field Name', 'lovable-to-wordpress'),
                     'type' => \Elementor\Controls_Manager::TEXT,
                 )
             );
@@ -179,7 +179,7 @@ if (class_exists('Elementor\Core\DynamicTags\Tag')) {
         }
         
         public function get_title() {
-            return __('ACF Field', 'lovable-exporter');
+            return __('ACF Field', 'lovable-to-wordpress');
         }
         
         protected function register_controls() {
@@ -203,7 +203,7 @@ if (class_exists('Elementor\Core\DynamicTags\Tag')) {
             $this->add_control(
                 'field_name',
                 array(
-                    'label' => __('Field', 'lovable-exporter'),
+                    'label' => __('Field', 'lovable-to-wordpress'),
                     'type' => \Elementor\Controls_Manager::SELECT,
                     'options' => $fields,
                 )
@@ -237,7 +237,7 @@ if (class_exists('Elementor\Core\DynamicTags\Tag')) {
         }
         
         public function get_title() {
-            return __('Taxonomy Terms', 'lovable-exporter');
+            return __('Taxonomy Terms', 'lovable-to-wordpress');
         }
         
         protected function register_controls() {
@@ -251,7 +251,7 @@ if (class_exists('Elementor\Core\DynamicTags\Tag')) {
             $this->add_control(
                 'taxonomy',
                 array(
-                    'label' => __('Taxonomy', 'lovable-exporter'),
+                    'label' => __('Taxonomy', 'lovable-to-wordpress'),
                     'type' => \Elementor\Controls_Manager::SELECT,
                     'options' => $taxonomy_options,
                 )
@@ -260,7 +260,7 @@ if (class_exists('Elementor\Core\DynamicTags\Tag')) {
             $this->add_control(
                 'separator',
                 array(
-                    'label' => __('Separator', 'lovable-exporter'),
+                    'label' => __('Separator', 'lovable-to-wordpress'),
                     'type' => \Elementor\Controls_Manager::TEXT,
                     'default' => ', ',
                 )

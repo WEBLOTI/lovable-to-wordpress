@@ -1,7 +1,7 @@
 <?php
 /**
- * Helper Functions for Lovable Exporter
- * 
+ * Helper Functions for Lovable to WordPress
+ *
  * This file contains utility functions for placeholder replacement,
  * dynamic content mapping, and asset optimization.
  */
@@ -18,7 +18,7 @@ if (!defined('ABSPATH')) {
  * @param int $post_id Post ID for context
  * @return string Processed content
  */
-function lovable_replace_placeholders($content, $post_id = null) {
+function l2wp_replace_placeholders($content, $post_id = null) {
     if (!$post_id) {
         $post_id = get_the_ID();
     }
@@ -44,21 +44,21 @@ function lovable_replace_placeholders($content, $post_id = null) {
     
     // ACF placeholders (if ACF is active)
     if (function_exists('get_field')) {
-        $content = lovable_replace_acf_placeholders($content, $post_id);
+        $content = l2wp_replace_acf_placeholders($content, $post_id);
     }
-    
+
     // JetEngine placeholders (if JetEngine is active)
     if (function_exists('jet_engine')) {
-        $content = lovable_replace_jetengine_placeholders($content, $post_id);
+        $content = l2wp_replace_jetengine_placeholders($content, $post_id);
     }
-    
+
     // MetaBox placeholders (if MetaBox is active)
     if (function_exists('rwmb_meta')) {
-        $content = lovable_replace_metabox_placeholders($content, $post_id);
+        $content = l2wp_replace_metabox_placeholders($content, $post_id);
     }
-    
+
     // Taxonomy placeholders
-    $content = lovable_replace_taxonomy_placeholders($content, $post_id);
+    $content = l2wp_replace_taxonomy_placeholders($content, $post_id);
     
     return $content;
 }
@@ -70,7 +70,7 @@ function lovable_replace_placeholders($content, $post_id = null) {
  * @param int $post_id Post ID
  * @return string Processed content
  */
-function lovable_replace_acf_placeholders($content, $post_id) {
+function l2wp_replace_acf_placeholders($content, $post_id) {
     // Match {{acf.field_name}} pattern
     preg_match_all('/\{\{acf\.([a-zA-Z0-9_-]+)\}\}/', $content, $matches);
     
@@ -99,7 +99,7 @@ function lovable_replace_acf_placeholders($content, $post_id) {
  * @param int $post_id Post ID
  * @return string Processed content
  */
-function lovable_replace_jetengine_placeholders($content, $post_id) {
+function l2wp_replace_jetengine_placeholders($content, $post_id) {
     // Match {{jet.field_name}} pattern
     preg_match_all('/\{\{jet\.([a-zA-Z0-9_-]+)\}\}/', $content, $matches);
     
@@ -120,7 +120,7 @@ function lovable_replace_jetengine_placeholders($content, $post_id) {
  * @param int $post_id Post ID
  * @return string Processed content
  */
-function lovable_replace_metabox_placeholders($content, $post_id) {
+function l2wp_replace_metabox_placeholders($content, $post_id) {
     // Match {{mb.field_name}} pattern
     preg_match_all('/\{\{mb\.([a-zA-Z0-9_-]+)\}\}/', $content, $matches);
     
@@ -146,7 +146,7 @@ function lovable_replace_metabox_placeholders($content, $post_id) {
  * @param int $post_id Post ID
  * @return string Processed content
  */
-function lovable_replace_taxonomy_placeholders($content, $post_id) {
+function l2wp_replace_taxonomy_placeholders($content, $post_id) {
     // Match {{taxonomy.taxonomy_name}} pattern
     preg_match_all('/\{\{taxonomy\.([a-zA-Z0-9_-]+)\}\}/', $content, $matches);
     
@@ -172,7 +172,7 @@ function lovable_replace_taxonomy_placeholders($content, $post_id) {
  * 
  * @return string|false Plugin name or false
  */
-function lovable_get_active_cpt_plugin() {
+function l2wp_get_active_cpt_plugin() {
     if (function_exists('get_field')) {
         return 'acf';
     } elseif (function_exists('jet_engine')) {
@@ -191,7 +191,7 @@ function lovable_get_active_cpt_plugin() {
  * 
  * @return array Custom post types
  */
-function lovable_get_custom_post_types() {
+function l2wp_get_custom_post_types() {
     $args = array(
         'public' => true,
         '_builtin' => false,
@@ -206,9 +206,9 @@ function lovable_get_custom_post_types() {
  * @param string $post_type Post type name
  * @return array Custom fields
  */
-function lovable_get_custom_fields($post_type) {
+function l2wp_get_custom_fields($post_type) {
     $fields = array();
-    $plugin = lovable_get_active_cpt_plugin();
+    $plugin = l2wp_get_active_cpt_plugin();
     
     switch ($plugin) {
         case 'acf':
@@ -256,7 +256,7 @@ function lovable_get_custom_fields($post_type) {
  * @param array $lovable_design Lovable design data
  * @return array Elementor JSON structure
  */
-function lovable_generate_elementor_json($lovable_design) {
+function l2wp_generate_elementor_json($lovable_design) {
     $elementor_data = array(
         'version' => '0.4',
         'title' => $lovable_design['title'] ?? 'Lovable Design',
@@ -267,7 +267,7 @@ function lovable_generate_elementor_json($lovable_design) {
     // Process each section from Lovable
     if (!empty($lovable_design['sections'])) {
         foreach ($lovable_design['sections'] as $section) {
-            $elementor_data['content'][] = lovable_convert_section_to_elementor($section);
+            $elementor_data['content'][] = l2wp_convert_section_to_elementor($section);
         }
     }
     
@@ -280,7 +280,7 @@ function lovable_generate_elementor_json($lovable_design) {
  * @param array $section Lovable section data
  * @return array Elementor section structure
  */
-function lovable_convert_section_to_elementor($section) {
+function l2wp_convert_section_to_elementor($section) {
     return array(
         'id' => uniqid(),
         'elType' => 'section',
@@ -289,7 +289,7 @@ function lovable_convert_section_to_elementor($section) {
             '_lovable_animation' => $section['animation'] ?? '',
             'css_classes' => 'lovable-section ' . ($section['classes'] ?? ''),
         ),
-        'elements' => lovable_convert_columns_to_elementor($section['columns'] ?? array()),
+        'elements' => l2wp_convert_columns_to_elementor($section['columns'] ?? array()),
     );
 }
 
@@ -299,7 +299,7 @@ function lovable_convert_section_to_elementor($section) {
  * @param array $columns Lovable columns data
  * @return array Elementor columns structure
  */
-function lovable_convert_columns_to_elementor($columns) {
+function l2wp_convert_columns_to_elementor($columns) {
     $elementor_columns = array();
     
     foreach ($columns as $column) {
@@ -310,7 +310,7 @@ function lovable_convert_columns_to_elementor($columns) {
                 '_column_size' => $column['width'] ?? 100,
                 'css_classes' => 'lovable-column ' . ($column['classes'] ?? ''),
             ),
-            'elements' => lovable_convert_widgets_to_elementor($column['widgets'] ?? array()),
+            'elements' => l2wp_convert_widgets_to_elementor($column['widgets'] ?? array()),
         );
     }
     
@@ -323,17 +323,17 @@ function lovable_convert_columns_to_elementor($columns) {
  * @param array $widgets Lovable widgets data
  * @return array Elementor widgets structure
  */
-function lovable_convert_widgets_to_elementor($widgets) {
+function l2wp_convert_widgets_to_elementor($widgets) {
     $elementor_widgets = array();
     
     foreach ($widgets as $widget) {
-        $widget_type = lovable_map_widget_type($widget['type']);
+        $widget_type = l2wp_map_widget_type($widget['type']);
         
         $elementor_widgets[] = array(
             'id' => uniqid(),
             'elType' => 'widget',
             'widgetType' => $widget_type,
-            'settings' => lovable_map_widget_settings($widget),
+            'settings' => l2wp_map_widget_settings($widget),
         );
     }
     
@@ -346,7 +346,7 @@ function lovable_convert_widgets_to_elementor($widgets) {
  * @param string $lovable_type Lovable widget type
  * @return string Elementor widget type
  */
-function lovable_map_widget_type($lovable_type) {
+function l2wp_map_widget_type($lovable_type) {
     $mapping = array(
         'heading' => 'heading',
         'text' => 'text-editor',
@@ -367,7 +367,7 @@ function lovable_map_widget_type($lovable_type) {
  * @param array $widget Lovable widget data
  * @return array Elementor settings
  */
-function lovable_map_widget_settings($widget) {
+function l2wp_map_widget_settings($widget) {
     $settings = array(
         'css_classes' => 'lovable-widget ' . ($widget['classes'] ?? ''),
         '_lovable_animation' => $widget['animation'] ?? '',
@@ -404,7 +404,7 @@ function lovable_map_widget_settings($widget) {
  * @param string $animation Animation name
  * @return string Sanitized animation name
  */
-function lovable_sanitize_animation($animation) {
+function l2wp_sanitize_animation($animation) {
     return sanitize_html_class($animation);
 }
 
@@ -413,7 +413,7 @@ function lovable_sanitize_animation($animation) {
  * 
  * @return bool
  */
-function lovable_is_elementor_active() {
+function l2wp_is_elementor_active() {
     return did_action('elementor/loaded');
 }
 
@@ -424,19 +424,19 @@ function lovable_is_elementor_active() {
  * @param string $title Template title
  * @return int|WP_Error Template ID or error
  */
-function lovable_import_elementor_template($json_file, $title = 'Lovable Template') {
-    if (!lovable_is_elementor_active()) {
-        return new WP_Error('elementor_not_active', __('Elementor is not active', 'lovable-exporter'));
+function l2wp_import_elementor_template($json_file, $title = 'Lovable Template') {
+    if (!l2wp_is_elementor_active()) {
+        return new WP_Error('elementor_not_active', __('Elementor is not active', 'lovable-to-wordpress'));
     }
     
     $json_content = file_get_contents($json_file);
     if (!$json_content) {
-        return new WP_Error('file_not_found', __('Template file not found', 'lovable-exporter'));
+        return new WP_Error('file_not_found', __('Template file not found', 'lovable-to-wordpress'));
     }
     
     $template_data = json_decode($json_content, true);
     if (!$template_data) {
-        return new WP_Error('invalid_json', __('Invalid JSON format', 'lovable-exporter'));
+        return new WP_Error('invalid_json', __('Invalid JSON format', 'lovable-to-wordpress'));
     }
     
     // Create template post

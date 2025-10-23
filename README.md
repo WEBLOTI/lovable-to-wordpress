@@ -28,8 +28,8 @@ Plugin de WordPress que convierte proyectos de Lovable a páginas de WordPress e
 ## 📦 Estructura del Plugin
 
 ```
-lovable-exporter/
-├── lovable-exporter.php          # Main plugin file
+lovable-to-wordpress/
+├── lovable-to-wordpress.php          # Main plugin file
 ├── plugin-mappings.json           # Plugin recommendations config
 ├── includes/
 │   ├── class-zip-analyzer.php     # ZIP extraction & analysis
@@ -48,7 +48,7 @@ lovable-exporter/
 
 1. **Copiar plugin a WordPress**:
    ```bash
-   cp -r lovable-exporter /path/to/wordpress/wp-content/plugins/
+   cp -r lovable-to-wordpress /path/to/wordpress/wp-content/plugins/
    ```
 
 2. **Activar en WordPress**:
@@ -73,7 +73,7 @@ zip -r lovable-project.zip .
 
 ### Paso 2: Importar a WordPress
 
-1. Ve a **WordPress Admin → Lovable Exporter**
+1. Ve a **WordPress Admin → Lovable to WordPress**
 
 2. En la pestaña "Import Design", sube el ZIP
 
@@ -200,7 +200,7 @@ $templates = $builder->build($analysis, $css_data, $selected_plugins);
 ### Test con Proyecto Real
 ```bash
 # Usa el proyecto de ejemplo
-cd lovable-exporter
+cd lovable-to-wordpress
 # El proyecto ganaderia-facil-rd ya está clonado en ~/testing/lovable-project
 ```
 

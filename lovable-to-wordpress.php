@@ -1,14 +1,14 @@
 <?php
 /**
- * Plugin Name: Lovable to WordPress Exporter
- * Plugin URI: https://github.com/yourusername/lovable-exporter
+ * Plugin Name: Lovable to WordPress
+ * Plugin URI: https://github.com/WEBLOTI/lovable-to-wordpress
  * Description: Export Lovable designs to WordPress with full Elementor compatibility. Supports animations, dynamic content, and custom post types.
  * Version: 1.0.0
- * Author: Your Name
- * Author URI: https://yourwebsite.com
+ * Author: WEBLOTI
+ * Author URI: https://github.com/WEBLOTI
  * License: GPL v2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain: lovable-exporter
+ * Text Domain: lovable-to-wordpress
  * Domain Path: /languages
  * Requires at least: 5.8
  * Requires PHP: 8.0
@@ -20,16 +20,16 @@ if (!defined('ABSPATH')) {
 }
 
 // Define plugin constants
-define('LOVABLE_EXPORTER_VERSION', '1.0.0');
-define('LOVABLE_EXPORTER_PLUGIN_DIR', plugin_dir_path(__FILE__));
-define('LOVABLE_EXPORTER_DIR', plugin_dir_path(__FILE__)); // Alias for v2 classes
-define('LOVABLE_EXPORTER_PLUGIN_URL', plugin_dir_url(__FILE__));
-define('LOVABLE_EXPORTER_PLUGIN_FILE', __FILE__);
+define('LOVABLE_TO_WORDPRESS_VERSION', '1.0.0');
+define('LOVABLE_TO_WORDPRESS_PLUGIN_DIR', plugin_dir_path(__FILE__));
+define('LOVABLE_TO_WORDPRESS_DIR', plugin_dir_path(__FILE__)); // Alias for v2 classes
+define('LOVABLE_TO_WORDPRESS_PLUGIN_URL', plugin_dir_url(__FILE__));
+define('LOVABLE_TO_WORDPRESS_PLUGIN_FILE', __FILE__);
 
 /**
- * Main Lovable Exporter Class
+ * Main Lovable to WordPress Class
  */
-class Lovable_Exporter {
+class L2WP_Main {
     
     /**
      * Instance of this class
@@ -87,22 +87,22 @@ class Lovable_Exporter {
      */
     private function load_dependencies() {
         // Load functions
-        require_once LOVABLE_EXPORTER_PLUGIN_DIR . 'functions.php';
-        
+        require_once LOVABLE_TO_WORDPRESS_PLUGIN_DIR . 'functions.php';
+
         // Load includes (v1 - JSON based)
-        require_once LOVABLE_EXPORTER_PLUGIN_DIR . 'includes/class-api-bridge.php';
-        require_once LOVABLE_EXPORTER_PLUGIN_DIR . 'includes/class-export-engine.php';
-        require_once LOVABLE_EXPORTER_PLUGIN_DIR . 'includes/class-elementor-mapper.php';
-        require_once LOVABLE_EXPORTER_PLUGIN_DIR . 'includes/class-asset-loader.php';
-        require_once LOVABLE_EXPORTER_PLUGIN_DIR . 'includes/class-dynamic-tags.php';
-        
+        require_once LOVABLE_TO_WORDPRESS_PLUGIN_DIR . 'includes/class-api-bridge.php';
+        require_once LOVABLE_TO_WORDPRESS_PLUGIN_DIR . 'includes/class-export-engine.php';
+        require_once LOVABLE_TO_WORDPRESS_PLUGIN_DIR . 'includes/class-elementor-mapper.php';
+        require_once LOVABLE_TO_WORDPRESS_PLUGIN_DIR . 'includes/class-asset-loader.php';
+        require_once LOVABLE_TO_WORDPRESS_PLUGIN_DIR . 'includes/class-dynamic-tags.php';
+
         // Load v2 includes (ZIP-based system with intelligent detection)
-        require_once LOVABLE_EXPORTER_PLUGIN_DIR . 'includes/class-zip-analyzer.php';
-        require_once LOVABLE_EXPORTER_PLUGIN_DIR . 'includes/class-component-detector.php';
-        require_once LOVABLE_EXPORTER_PLUGIN_DIR . 'includes/class-plugin-recommender.php';
-        require_once LOVABLE_EXPORTER_PLUGIN_DIR . 'includes/class-css-extractor.php';
-        require_once LOVABLE_EXPORTER_PLUGIN_DIR . 'includes/class-elementor-builder.php';
-        
+        require_once LOVABLE_TO_WORDPRESS_PLUGIN_DIR . 'includes/class-zip-analyzer.php';
+        require_once LOVABLE_TO_WORDPRESS_PLUGIN_DIR . 'includes/class-component-detector.php';
+        require_once LOVABLE_TO_WORDPRESS_PLUGIN_DIR . 'includes/class-plugin-recommender.php';
+        require_once LOVABLE_TO_WORDPRESS_PLUGIN_DIR . 'includes/class-css-extractor.php';
+        require_once LOVABLE_TO_WORDPRESS_PLUGIN_DIR . 'includes/class-elementor-builder.php';
+
         // Initialize classes
         $this->init_classes();
     }
@@ -124,13 +124,13 @@ class Lovable_Exporter {
      */
     public function activate() {
         // Create default options
-        add_option('lovable_exporter_version', LOVABLE_EXPORTER_VERSION);
-        add_option('lovable_exporter_settings', array(
+        add_option('lovable_to_wordpress_version', LOVABLE_TO_WORDPRESS_VERSION);
+        add_option('lovable_to_wordpress_settings', array(
             'animation_enabled' => true,
             'lazyload_enabled' => true,
             'critical_css_enabled' => true,
         ));
-        
+
         // Flush rewrite rules
         flush_rewrite_rules();
     }
@@ -149,30 +149,30 @@ class Lovable_Exporter {
     public function enqueue_assets() {
         // Enqueue CSS
         wp_enqueue_style(
-            'lovable-exporter-styles',
-            LOVABLE_EXPORTER_PLUGIN_URL . 'assets/css/lovable.css',
+            'lovable-to-wordpress-styles',
+            LOVABLE_TO_WORDPRESS_PLUGIN_URL . 'assets/css/lovable.css',
             array(),
-            LOVABLE_EXPORTER_VERSION,
+            LOVABLE_TO_WORDPRESS_VERSION,
             'all'
         );
-        
+
         // Enqueue JS (with defer)
         wp_enqueue_script(
-            'lovable-exporter-animations',
-            LOVABLE_EXPORTER_PLUGIN_URL . 'assets/js/lovable-animations.js',
+            'lovable-to-wordpress-animations',
+            LOVABLE_TO_WORDPRESS_PLUGIN_URL . 'assets/js/lovable-animations.js',
             array(),
-            LOVABLE_EXPORTER_VERSION,
+            LOVABLE_TO_WORDPRESS_VERSION,
             true
         );
-        
+
         // Add defer attribute
         add_filter('script_loader_tag', array($this, 'add_defer_attribute'), 10, 2);
-        
+
         // Localize script with settings
-        wp_localize_script('lovable-exporter-animations', 'lovableSettings', array(
+        wp_localize_script('lovable-to-wordpress-animations', 'lovableSettings', array(
             'ajaxUrl' => admin_url('admin-ajax.php'),
-            'nonce' => wp_create_nonce('lovable_exporter_nonce'),
-            'animationEnabled' => get_option('lovable_exporter_settings')['animation_enabled'],
+            'nonce' => wp_create_nonce('lovable_to_wordpress_nonce'),
+            'animationEnabled' => get_option('lovable_to_wordpress_settings')['animation_enabled'],
         ));
     }
     
@@ -181,10 +181,10 @@ class Lovable_Exporter {
      */
     public function enqueue_editor_assets() {
         wp_enqueue_style(
-            'lovable-exporter-editor',
-            LOVABLE_EXPORTER_PLUGIN_URL . 'assets/css/lovable.css',
+            'lovable-to-wordpress-editor',
+            LOVABLE_TO_WORDPRESS_PLUGIN_URL . 'assets/css/lovable.css',
             array(),
-            LOVABLE_EXPORTER_VERSION
+            LOVABLE_TO_WORDPRESS_VERSION
         );
     }
     
@@ -192,7 +192,7 @@ class Lovable_Exporter {
      * Add defer attribute to scripts
      */
     public function add_defer_attribute($tag, $handle) {
-        if ('lovable-exporter-animations' === $handle) {
+        if ('lovable-to-wordpress-animations' === $handle) {
             return str_replace(' src', ' defer src', $tag);
         }
         return $tag;
@@ -203,21 +203,21 @@ class Lovable_Exporter {
      */
     public function add_admin_menu() {
         add_menu_page(
-            __('Lovable Exporter', 'lovable-exporter'),
-            __('Lovable Exporter', 'lovable-exporter'),
+            __('Lovable to WordPress', 'lovable-to-wordpress'),
+            __('Lovable to WordPress', 'lovable-to-wordpress'),
             'manage_options',
-            'lovable-exporter',
+            'lovable-to-wordpress',
             array($this, 'render_admin_page'),
             'dashicons-download',
             30
         );
     }
-    
+
     /**
      * Render admin page
      */
     public function render_admin_page() {
-        include LOVABLE_EXPORTER_PLUGIN_DIR . 'templates/admin-page.php';
+        include LOVABLE_TO_WORDPRESS_PLUGIN_DIR . 'templates/admin-page.php';
     }
     
     /**
@@ -250,12 +250,12 @@ class Lovable_Exporter {
     public function handle_import_submission() {
         // Verify nonce
         if (!isset($_POST['_wpnonce']) || !wp_verify_nonce($_POST['_wpnonce'], 'lovable_import_with_plugins')) {
-            wp_die(__('Security check failed', 'lovable-exporter'));
+            wp_die(__('Security check failed', 'lovable-to-wordpress'));
         }
         
         // Check user capabilities
         if (!current_user_can('manage_options')) {
-            wp_die(__('Insufficient permissions', 'lovable-exporter'));
+            wp_die(__('Insufficient permissions', 'lovable-to-wordpress'));
         }
         
         // Get analysis data from transient
@@ -263,7 +263,7 @@ class Lovable_Exporter {
         $detections = get_transient('lovable_detections_' . get_current_user_id());
         
         if (!$analysis_result) {
-            wp_die(__('No analysis data found. Please upload your ZIP file again.', 'lovable-exporter'));
+            wp_die(__('No analysis data found. Please upload your ZIP file again.', 'lovable-to-wordpress'));
         }
         
         // Get selected plugins
@@ -283,7 +283,7 @@ class Lovable_Exporter {
         // For now, just redirect with a success message
         $redirect_url = add_query_arg(
             array(
-                'page' => 'lovable-exporter',
+                'page' => 'lovable-to-wordpress',
                 'import_status' => 'success',
                 'message' => urlencode('Import functionality is under development. Your selections have been saved.')
             ),
@@ -298,9 +298,9 @@ class Lovable_Exporter {
 /**
  * Initialize the plugin
  */
-function lovable_exporter_init() {
-    return Lovable_Exporter::get_instance();
+function l2wp_init() {
+    return L2WP_Main::get_instance();
 }
 
 // Start the plugin
-lovable_exporter_init();
+l2wp_init();

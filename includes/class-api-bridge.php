@@ -117,7 +117,7 @@ class Lovable_API_Bridge {
         $post_type = $request->get_param('post_type');
         
         if (!post_type_exists($post_type)) {
-            return new WP_Error('invalid_post_type', __('Invalid post type', 'lovable-exporter'), array('status' => 404));
+            return new WP_Error('invalid_post_type', __('Invalid post type', 'lovable-to-wordpress'), array('status' => 404));
         }
         
         $fields = lovable_get_custom_fields($post_type);
@@ -161,7 +161,7 @@ class Lovable_API_Bridge {
         $post_type = $request->get_param('post_type');
         
         if (!post_type_exists($post_type)) {
-            return new WP_Error('invalid_post_type', __('Invalid post type', 'lovable-exporter'), array('status' => 404));
+            return new WP_Error('invalid_post_type', __('Invalid post type', 'lovable-to-wordpress'), array('status' => 404));
         }
         
         $taxonomies = get_object_taxonomies($post_type, 'objects');
@@ -278,7 +278,7 @@ class Lovable_API_Bridge {
         $template_type = $request->get_param('type') ?: 'page';
         
         if (!$design_data) {
-            return new WP_Error('no_design_data', __('No design data provided', 'lovable-exporter'), array('status' => 400));
+            return new WP_Error('no_design_data', __('No design data provided', 'lovable-to-wordpress'), array('status' => 400));
         }
         
         // Convert Lovable design to Elementor format
@@ -313,7 +313,7 @@ class Lovable_API_Bridge {
      * Get mapper configuration
      */
     public function get_mapper_config($request) {
-        $mapper_file = LOVABLE_EXPORTER_PLUGIN_DIR . 'mapper.json';
+        $mapper_file = LOVABLE_TO_WORDPRESS_PLUGIN_DIR . 'mapper.json';
         
         if (!file_exists($mapper_file)) {
             // Return default mapper config
@@ -336,27 +336,27 @@ class Lovable_API_Bridge {
         $mapper_data = $request->get_param('mapper');
         
         if (!$mapper_data) {
-            return new WP_Error('no_mapper_data', __('No mapper data provided', 'lovable-exporter'), array('status' => 400));
+            return new WP_Error('no_mapper_data', __('No mapper data provided', 'lovable-to-wordpress'), array('status' => 400));
         }
         
-        $mapper_file = LOVABLE_EXPORTER_PLUGIN_DIR . 'mapper.json';
+        $mapper_file = LOVABLE_TO_WORDPRESS_PLUGIN_DIR . 'mapper.json';
         
         // Validate JSON
         $json_data = json_encode($mapper_data, JSON_PRETTY_PRINT);
         if (json_last_error() !== JSON_ERROR_NONE) {
-            return new WP_Error('invalid_json', __('Invalid JSON data', 'lovable-exporter'), array('status' => 400));
+            return new WP_Error('invalid_json', __('Invalid JSON data', 'lovable-to-wordpress'), array('status' => 400));
         }
         
         // Save mapper file
         $result = file_put_contents($mapper_file, $json_data);
         
         if ($result === false) {
-            return new WP_Error('save_failed', __('Failed to save mapper configuration', 'lovable-exporter'), array('status' => 500));
+            return new WP_Error('save_failed', __('Failed to save mapper configuration', 'lovable-to-wordpress'), array('status' => 500));
         }
         
         return rest_ensure_response(array(
             'success' => true,
-            'message' => __('Mapper configuration updated successfully', 'lovable-exporter'),
+            'message' => __('Mapper configuration updated successfully', 'lovable-to-wordpress'),
         ));
     }
 }

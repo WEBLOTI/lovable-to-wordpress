@@ -275,7 +275,7 @@ class Lovable_Elementor_Mapper {
         $element->start_controls_section(
             'lovable_animation_section',
             array(
-                'label' => __('Lovable Animations', 'lovable-exporter'),
+                'label' => __('Lovable Animations', 'lovable-to-wordpress'),
                 'tab' => \Elementor\Controls_Manager::TAB_ADVANCED,
             )
         );
@@ -283,27 +283,27 @@ class Lovable_Elementor_Mapper {
         $element->add_control(
             'lovable_animation_type',
             array(
-                'label' => __('Animation Type', 'lovable-exporter'),
+                'label' => __('Animation Type', 'lovable-to-wordpress'),
                 'type' => \Elementor\Controls_Manager::SELECT,
                 'options' => array(
-                    '' => __('None', 'lovable-exporter'),
-                    'fadeIn' => __('Fade In', 'lovable-exporter'),
-                    'fadeInUp' => __('Fade In Up', 'lovable-exporter'),
-                    'fadeInDown' => __('Fade In Down', 'lovable-exporter'),
-                    'fadeInLeft' => __('Fade In Left', 'lovable-exporter'),
-                    'fadeInRight' => __('Fade In Right', 'lovable-exporter'),
-                    'scaleUp' => __('Scale Up', 'lovable-exporter'),
-                    'scaleDown' => __('Scale Down', 'lovable-exporter'),
-                    'slideInUp' => __('Slide In Up', 'lovable-exporter'),
-                    'slideInDown' => __('Slide In Down', 'lovable-exporter'),
-                    'slideInLeft' => __('Slide In Left', 'lovable-exporter'),
-                    'slideInRight' => __('Slide In Right', 'lovable-exporter'),
-                    'rotateIn' => __('Rotate In', 'lovable-exporter'),
-                    'bounceIn' => __('Bounce In', 'lovable-exporter'),
-                    'flipInX' => __('Flip In X', 'lovable-exporter'),
-                    'flipInY' => __('Flip In Y', 'lovable-exporter'),
-                    'zoomIn' => __('Zoom In', 'lovable-exporter'),
-                    'blurIn' => __('Blur In', 'lovable-exporter'),
+                    '' => __('None', 'lovable-to-wordpress'),
+                    'fadeIn' => __('Fade In', 'lovable-to-wordpress'),
+                    'fadeInUp' => __('Fade In Up', 'lovable-to-wordpress'),
+                    'fadeInDown' => __('Fade In Down', 'lovable-to-wordpress'),
+                    'fadeInLeft' => __('Fade In Left', 'lovable-to-wordpress'),
+                    'fadeInRight' => __('Fade In Right', 'lovable-to-wordpress'),
+                    'scaleUp' => __('Scale Up', 'lovable-to-wordpress'),
+                    'scaleDown' => __('Scale Down', 'lovable-to-wordpress'),
+                    'slideInUp' => __('Slide In Up', 'lovable-to-wordpress'),
+                    'slideInDown' => __('Slide In Down', 'lovable-to-wordpress'),
+                    'slideInLeft' => __('Slide In Left', 'lovable-to-wordpress'),
+                    'slideInRight' => __('Slide In Right', 'lovable-to-wordpress'),
+                    'rotateIn' => __('Rotate In', 'lovable-to-wordpress'),
+                    'bounceIn' => __('Bounce In', 'lovable-to-wordpress'),
+                    'flipInX' => __('Flip In X', 'lovable-to-wordpress'),
+                    'flipInY' => __('Flip In Y', 'lovable-to-wordpress'),
+                    'zoomIn' => __('Zoom In', 'lovable-to-wordpress'),
+                    'blurIn' => __('Blur In', 'lovable-to-wordpress'),
                 ),
                 'default' => '',
             )
@@ -312,7 +312,7 @@ class Lovable_Elementor_Mapper {
         $element->add_control(
             'lovable_animation_delay',
             array(
-                'label' => __('Animation Delay (ms)', 'lovable-exporter'),
+                'label' => __('Animation Delay (ms)', 'lovable-to-wordpress'),
                 'type' => \Elementor\Controls_Manager::NUMBER,
                 'default' => 0,
                 'min' => 0,
@@ -327,12 +327,12 @@ class Lovable_Elementor_Mapper {
         $element->add_control(
             'lovable_animation_duration',
             array(
-                'label' => __('Animation Duration', 'lovable-exporter'),
+                'label' => __('Animation Duration', 'lovable-to-wordpress'),
                 'type' => \Elementor\Controls_Manager::SELECT,
                 'options' => array(
-                    'fast' => __('Fast', 'lovable-exporter'),
-                    'normal' => __('Normal', 'lovable-exporter'),
-                    'slow' => __('Slow', 'lovable-exporter'),
+                    'fast' => __('Fast', 'lovable-to-wordpress'),
+                    'normal' => __('Normal', 'lovable-to-wordpress'),
+                    'slow' => __('Slow', 'lovable-to-wordpress'),
                 ),
                 'default' => 'normal',
                 'condition' => array(

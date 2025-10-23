@@ -344,7 +344,7 @@ class Lovable_Elementor_Builder {
         update_post_meta($page_id, '_elementor_data', wp_json_encode($elementor_data));
         update_post_meta($page_id, '_elementor_edit_mode', 'builder');
         update_post_meta($page_id, '_lovable_source', true);
-        update_post_meta($page_id, '_lovable_version', LOVABLE_EXPORTER_VERSION);
+        update_post_meta($page_id, '_lovable_version', LOVABLE_TO_WORDPRESS_VERSION);
         
         // Apply custom CSS
         if (!empty($this->css_data['custom_css'])) {

@@ -34,14 +34,14 @@ class Lovable_Export_Engine {
         // Verify nonce
         if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'lovable_remove_template')) {
             wp_send_json_error(array(
-                'message' => __('Security check failed', 'lovable-exporter')
+                'message' => __('Security check failed', 'lovable-to-wordpress')
             ));
         }
         
         // Check permissions
         if (!current_user_can('manage_options')) {
             wp_send_json_error(array(
-                'message' => __('Unauthorized access', 'lovable-exporter')
+                'message' => __('Unauthorized access', 'lovable-to-wordpress')
             ));
         }
         
@@ -50,7 +50,7 @@ class Lovable_Export_Engine {
         
         if (!$template_id) {
             wp_send_json_error(array(
-                'message' => __('Invalid template ID', 'lovable-exporter')
+                'message' => __('Invalid template ID', 'lovable-to-wordpress')
             ));
         }
         
@@ -58,7 +58,7 @@ class Lovable_Export_Engine {
         $post = get_post($template_id);
         if (!$post || $post->post_type !== 'elementor_library') {
             wp_send_json_error(array(
-                'message' => __('Invalid template', 'lovable-exporter')
+                'message' => __('Invalid template', 'lovable-to-wordpress')
             ));
         }
         
@@ -68,7 +68,7 @@ class Lovable_Export_Engine {
         
         wp_send_json_success(array(
             'message' => sprintf(
-                __('Template "%s" removed from Lovable Templates list. It still exists in Elementor.', 'lovable-exporter'),
+                __('Template "%s" removed from Lovable Templates list. It still exists in Elementor.', 'lovable-to-wordpress'),
                 $post->post_title
             )
         ));
@@ -81,13 +81,13 @@ class Lovable_Export_Engine {
         check_admin_referer('lovable_export_nonce');
         
         if (!current_user_can('manage_options')) {
-            wp_die(__('Unauthorized access', 'lovable-exporter'));
+            wp_die(__('Unauthorized access', 'lovable-to-wordpress'));
         }
         
         $design_json = $_POST['design_data'] ?? '';
         
         if (empty($design_json)) {
-            wp_die(__('No design data provided', 'lovable-exporter'));
+            wp_die(__('No design data provided', 'lovable-to-wordpress'));
         }
         
         // Debug mode - show what PHP is receiving
@@ -101,7 +101,7 @@ class Lovable_Export_Engine {
             echo '<p>JSON Error Code: ' . json_last_error() . '</p>';
             echo '<p>JSON Error Message: ' . json_last_error_msg() . '</p>';
             echo '<h3>Encoding:</h3><p>' . mb_detect_encoding($design_json, 'UTF-8, ISO-8859-1', true) . '</p>';
-            echo '<hr><a href="' . admin_url('admin.php?page=lovable-exporter') . '">Back to Plugin</a>';
+            echo '<hr><a href="' . admin_url('admin.php?page=lovable-to-wordpress') . '">Back to Plugin</a>';
             exit;
         }
         
@@ -111,7 +111,7 @@ class Lovable_Export_Engine {
             wp_die($result->get_error_message());
         }
         
-        wp_redirect(admin_url('admin.php?page=lovable-exporter&exported=' . $result));
+        wp_redirect(admin_url('admin.php?page=lovable-to-wordpress&exported=' . $result));
         exit;
     }
     
@@ -135,13 +135,13 @@ class Lovable_Export_Engine {
         if (json_last_error() !== JSON_ERROR_NONE) {
             $error_msg = $this->get_json_error_message(json_last_error());
             return new WP_Error('invalid_json', sprintf(
-                __('Invalid JSON: %s', 'lovable-exporter'),
+                __('Invalid JSON: %s', 'lovable-to-wordpress'),
                 $error_msg
             ));
         }
         
         if (!$design_data || !is_array($design_data)) {
-            return new WP_Error('invalid_json', __('Invalid design data structure', 'lovable-exporter'));
+            return new WP_Error('invalid_json', __('Invalid design data structure', 'lovable-to-wordpress'));
         }
         
         // Get title from proyecto or fallback
@@ -713,7 +713,7 @@ class Lovable_Export_Engine {
         update_post_meta($template_id, '_elementor_template_type', $elementor_data['type']);
         update_post_meta($template_id, '_elementor_edit_mode', 'builder');
         update_post_meta($template_id, '_lovable_source', true);
-        update_post_meta($template_id, '_lovable_version', LOVABLE_EXPORTER_VERSION);
+        update_post_meta($template_id, '_lovable_version', LOVABLE_TO_WORDPRESS_VERSION);
         
         return $template_id;
     }

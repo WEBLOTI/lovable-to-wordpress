@@ -208,7 +208,7 @@ _e( 'Design exported successfully', 'lovable-to-wordpress' );
 esc_html__( 'Settings', 'lovable-to-wordpress' );
 
 // ❌ Nunca usar otro text domain
-__( 'Export Design', 'lovable-exporter' );
+__( 'Export Design', 'lovable-to-wordpress' );
 __( 'Export Design' ); // Falta text domain
 ```
 

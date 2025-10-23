@@ -15,7 +15,7 @@ if (!defined('ABSPATH')) {
 if (isset($_GET['reset']) && $_GET['reset'] === '1') {
     delete_transient('lovable_analysis_' . get_current_user_id());
     delete_transient('lovable_detections_' . get_current_user_id());
-    wp_redirect(admin_url('admin.php?page=lovable-exporter'));
+    wp_redirect(admin_url('admin.php?page=lovable-to-wordpress'));
     exit;
 }
 
@@ -59,9 +59,9 @@ if (!$analysis_result) {
         <!-- Step 1: Upload ZIP -->
         <div class="lovable-upload-section">
             <div class="lovable-hero-card">
-                <h2>🚀 <?php _e('Import Lovable Project', 'lovable-exporter'); ?></h2>
+                <h2>🚀 <?php _e('Import Lovable Project', 'lovable-to-wordpress'); ?></h2>
                 <p class="description">
-                    <?php _e('Upload your complete Lovable project ZIP file. The system will automatically detect functionalities and recommend plugins.', 'lovable-exporter'); ?>
+                    <?php _e('Upload your complete Lovable project ZIP file. The system will automatically detect functionalities and recommend plugins.', 'lovable-to-wordpress'); ?>
                 </p>
                 
                 <form method="post" enctype="multipart/form-data" class="lovable-upload-form">
@@ -71,44 +71,44 @@ if (!$analysis_result) {
                         <input type="file" name="lovable_zip" id="lovable_zip" accept=".zip" required>
                         <label for="lovable_zip" class="lovable-file-label">
                             <span class="dashicons dashicons-upload"></span>
-                            <span class="lovable-file-text"><?php _e('Choose ZIP file or drag here', 'lovable-exporter'); ?></span>
+                            <span class="lovable-file-text"><?php _e('Choose ZIP file or drag here', 'lovable-to-wordpress'); ?></span>
                         </label>
                     </div>
                     
                     <button type="submit" name="lovable_analyze_zip" class="button button-primary button-hero">
                         <span class="dashicons dashicons-search"></span>
-                        <?php _e('Analyze Project', 'lovable-exporter'); ?>
+                        <?php _e('Analyze Project', 'lovable-to-wordpress'); ?>
                     </button>
                 </form>
             </div>
             
             <div class="lovable-info-grid">
                 <div class="lovable-info-card">
-                    <h3>📦 <?php _e('What to Upload', 'lovable-exporter'); ?></h3>
+                    <h3>📦 <?php _e('What to Upload', 'lovable-to-wordpress'); ?></h3>
                     <ul>
-                        <li><?php _e('Complete Lovable project from GitHub', 'lovable-exporter'); ?></li>
-                        <li><?php _e('Include src/, public/, package.json', 'lovable-exporter'); ?></li>
-                        <li><?php _e('Export from: git clone + zip', 'lovable-exporter'); ?></li>
+                        <li><?php _e('Complete Lovable project from GitHub', 'lovable-to-wordpress'); ?></li>
+                        <li><?php _e('Include src/, public/, package.json', 'lovable-to-wordpress'); ?></li>
+                        <li><?php _e('Export from: git clone + zip', 'lovable-to-wordpress'); ?></li>
                     </ul>
                 </div>
                 
                 <div class="lovable-info-card">
-                    <h3>🔍 <?php _e('What Gets Detected', 'lovable-exporter'); ?></h3>
+                    <h3>🔍 <?php _e('What Gets Detected', 'lovable-to-wordpress'); ?></h3>
                     <ul>
-                        <li><?php _e('Forms → Plugin recommendations', 'lovable-exporter'); ?></li>
-                        <li><?php _e('Modals → Popup solutions', 'lovable-exporter'); ?></li>
-                        <li><?php _e('Filters → Search plugins', 'lovable-exporter'); ?></li>
-                        <li><?php _e('CPTs → Field management', 'lovable-exporter'); ?></li>
+                        <li><?php _e('Forms → Plugin recommendations', 'lovable-to-wordpress'); ?></li>
+                        <li><?php _e('Modals → Popup solutions', 'lovable-to-wordpress'); ?></li>
+                        <li><?php _e('Filters → Search plugins', 'lovable-to-wordpress'); ?></li>
+                        <li><?php _e('CPTs → Field management', 'lovable-to-wordpress'); ?></li>
                     </ul>
                 </div>
                 
                 <div class="lovable-info-card">
-                    <h3>✨ <?php _e('What Gets Preserved', 'lovable-exporter'); ?></h3>
+                    <h3>✨ <?php _e('What Gets Preserved', 'lovable-to-wordpress'); ?></h3>
                     <ul>
-                        <li><?php _e('85-90% of styles automatically', 'lovable-exporter'); ?></li>
-                        <li><?php _e('Tailwind colors & fonts', 'lovable-exporter'); ?></li>
-                        <li><?php _e('Flexbox/Grid structure', 'lovable-exporter'); ?></li>
-                        <li><?php _e('100% editable in Elementor', 'lovable-exporter'); ?></li>
+                        <li><?php _e('85-90% of styles automatically', 'lovable-to-wordpress'); ?></li>
+                        <li><?php _e('Tailwind colors & fonts', 'lovable-to-wordpress'); ?></li>
+                        <li><?php _e('Flexbox/Grid structure', 'lovable-to-wordpress'); ?></li>
+                        <li><?php _e('100% editable in Elementor', 'lovable-to-wordpress'); ?></li>
                     </ul>
                 </div>
             </div>
@@ -120,34 +120,34 @@ if (!$analysis_result) {
             
             <!-- Project Summary -->
             <div class="lovable-card lovable-summary-card">
-                <h2>📊 <?php _e('Project Analysis', 'lovable-exporter'); ?></h2>
+                <h2>📊 <?php _e('Project Analysis', 'lovable-to-wordpress'); ?></h2>
                 
                 <div class="lovable-stats-grid">
                     <div class="lovable-stat">
                         <span class="lovable-stat-number"><?php echo count($analysis_result['pages'] ?? []); ?></span>
-                        <span class="lovable-stat-label"><?php _e('Pages Found', 'lovable-exporter'); ?></span>
+                        <span class="lovable-stat-label"><?php _e('Pages Found', 'lovable-to-wordpress'); ?></span>
                     </div>
                     <div class="lovable-stat">
                         <span class="lovable-stat-number"><?php echo count($analysis_result['components'] ?? []); ?></span>
-                        <span class="lovable-stat-label"><?php _e('Components', 'lovable-exporter'); ?></span>
+                        <span class="lovable-stat-label"><?php _e('Components', 'lovable-to-wordpress'); ?></span>
                     </div>
                     <div class="lovable-stat">
                         <span class="lovable-stat-number"><?php echo count($detections ?? []); ?></span>
-                        <span class="lovable-stat-label"><?php _e('Functionalities', 'lovable-exporter'); ?></span>
+                        <span class="lovable-stat-label"><?php _e('Functionalities', 'lovable-to-wordpress'); ?></span>
                     </div>
                     <div class="lovable-stat">
                         <span class="lovable-stat-number"><?php echo count($analysis_result['assets']['images'] ?? []); ?></span>
-                        <span class="lovable-stat-label"><?php _e('Images', 'lovable-exporter'); ?></span>
+                        <span class="lovable-stat-label"><?php _e('Images', 'lovable-to-wordpress'); ?></span>
                     </div>
                 </div>
                 
-                <h3><?php _e('Project:', 'lovable-exporter'); ?> <strong><?php echo esc_html($analysis_result['project_name']); ?></strong></h3>
+                <h3><?php _e('Project:', 'lovable-to-wordpress'); ?> <strong><?php echo esc_html($analysis_result['project_name']); ?></strong></h3>
                 <?php if (!empty($analysis_result['description'])): ?>
                     <p><?php echo esc_html($analysis_result['description']); ?></p>
                 <?php endif; ?>
                 
                 <details class="lovable-details">
-                    <summary><?php _e('View Detected Pages', 'lovable-exporter'); ?></summary>
+                    <summary><?php _e('View Detected Pages', 'lovable-to-wordpress'); ?></summary>
                     <ul>
                         <?php foreach ($analysis_result['pages'] ?? [] as $page): ?>
                             <li><code><?php echo esc_html($page['name']); ?></code> (<?php echo size_format($page['size']); ?>)</li>
@@ -162,8 +162,8 @@ if (!$analysis_result) {
                     <?php wp_nonce_field('lovable_import_with_plugins'); ?>
                     <input type="hidden" name="action" value="lovable_import_project">
                     
-                    <h2 class="lovable-section-title">🔌 <?php _e('Plugin Recommendations', 'lovable-exporter'); ?></h2>
-                    <p class="description"><?php _e('Select which plugins to use for each detected functionality. You can choose between multiple options or skip.', 'lovable-exporter'); ?></p>
+                    <h2 class="lovable-section-title">🔌 <?php _e('Plugin Recommendations', 'lovable-to-wordpress'); ?></h2>
+                    <p class="description"><?php _e('Select which plugins to use for each detected functionality. You can choose between multiple options or skip.', 'lovable-to-wordpress'); ?></p>
                     
                     <?php 
                     $recommender = new Lovable_Plugin_Recommender();
@@ -176,7 +176,7 @@ if (!$analysis_result) {
                         <div class="lovable-card lovable-functionality-card">
                             <h3>
                                 <?php echo esc_html($detection['name']); ?>
-                                <span class="lovable-badge"><?php echo $detection['count']; ?> <?php _e('found', 'lovable-exporter'); ?></span>
+                                <span class="lovable-badge"><?php echo $detection['count']; ?> <?php _e('found', 'lovable-to-wordpress'); ?></span>
                             </h3>
                             
                             <div class="lovable-plugin-options">
@@ -211,12 +211,12 @@ if (!$analysis_result) {
                                             <div class="lovable-plugin-status">
                                                 <?php if ($solution['installed']): ?>
                                                     <?php if ($solution['active']): ?>
-                                                        <span class="lovable-status-active">✓ <?php _e('Active', 'lovable-exporter'); ?></span>
+                                                        <span class="lovable-status-active">✓ <?php _e('Active', 'lovable-to-wordpress'); ?></span>
                                                     <?php else: ?>
-                                                        <span class="lovable-status-inactive">○ <?php _e('Installed (Inactive)', 'lovable-exporter'); ?></span>
+                                                        <span class="lovable-status-inactive">○ <?php _e('Installed (Inactive)', 'lovable-to-wordpress'); ?></span>
                                                     <?php endif; ?>
                                                 <?php else: ?>
-                                                    <span class="lovable-status-not-installed"><?php _e('Will be installed', 'lovable-exporter'); ?></span>
+                                                    <span class="lovable-status-not-installed"><?php _e('Will be installed', 'lovable-to-wordpress'); ?></span>
                                                 <?php endif; ?>
                                             </div>
                                         </div>
@@ -228,8 +228,8 @@ if (!$analysis_result) {
                                            name="plugin_choice[<?php echo esc_attr($functionality_key); ?>]" 
                                            value="skip">
                                     <div class="lovable-plugin-card lovable-skip-option">
-                                        <strong><?php _e('Skip / Manual Setup', 'lovable-exporter'); ?></strong>
-                                        <p><?php _e('Configure later manually', 'lovable-exporter'); ?></p>
+                                        <strong><?php _e('Skip / Manual Setup', 'lovable-to-wordpress'); ?></strong>
+                                        <p><?php _e('Configure later manually', 'lovable-to-wordpress'); ?></p>
                                     </div>
                                 </label>
                             </div>
@@ -238,47 +238,47 @@ if (!$analysis_result) {
                     <?php endforeach; ?>
                     
                     <div class="lovable-card lovable-import-options">
-                        <h3><?php _e('Import Options', 'lovable-exporter'); ?></h3>
+                        <h3><?php _e('Import Options', 'lovable-to-wordpress'); ?></h3>
                         
                         <label>
                             <input type="checkbox" name="install_plugins" value="1" checked>
-                            <strong><?php _e('Automatically install selected plugins', 'lovable-exporter'); ?></strong>
-                            <p class="description"><?php _e('Download and activate plugins from WordPress.org', 'lovable-exporter'); ?></p>
+                            <strong><?php _e('Automatically install selected plugins', 'lovable-to-wordpress'); ?></strong>
+                            <p class="description"><?php _e('Download and activate plugins from WordPress.org', 'lovable-to-wordpress'); ?></p>
                         </label>
                         
                         <label>
                             <input type="checkbox" name="import_assets" value="1" checked>
-                            <strong><?php _e('Import images and assets', 'lovable-exporter'); ?></strong>
-                            <p class="description"><?php _e('Upload images to WordPress media library', 'lovable-exporter'); ?></p>
+                            <strong><?php _e('Import images and assets', 'lovable-to-wordpress'); ?></strong>
+                            <p class="description"><?php _e('Upload images to WordPress media library', 'lovable-to-wordpress'); ?></p>
                         </label>
                         
                         <label>
                             <input type="checkbox" name="apply_css" value="1" checked>
-                            <strong><?php _e('Apply Lovable CSS styles', 'lovable-exporter'); ?></strong>
-                            <p class="description"><?php _e('Inject Tailwind colors and custom CSS', 'lovable-exporter'); ?></p>
+                            <strong><?php _e('Apply Lovable CSS styles', 'lovable-to-wordpress'); ?></strong>
+                            <p class="description"><?php _e('Inject Tailwind colors and custom CSS', 'lovable-to-wordpress'); ?></p>
                         </label>
                         
                         <label>
                             <input type="checkbox" name="remember_preferences" value="1">
-                            <strong><?php _e('Remember my plugin choices', 'lovable-exporter'); ?></strong>
-                            <p class="description"><?php _e('Use these plugins automatically for future imports', 'lovable-exporter'); ?></p>
+                            <strong><?php _e('Remember my plugin choices', 'lovable-to-wordpress'); ?></strong>
+                            <p class="description"><?php _e('Use these plugins automatically for future imports', 'lovable-to-wordpress'); ?></p>
                         </label>
                     </div>
                     
                     <div class="lovable-actions">
                         <button type="submit" class="button button-primary button-hero">
                             <span class="dashicons dashicons-download"></span>
-                            <?php _e('Import to WordPress', 'lovable-exporter'); ?>
+                            <?php _e('Import to WordPress', 'lovable-to-wordpress'); ?>
                         </button>
                         
-                        <a href="?page=lovable-exporter" class="button button-secondary">
-                            <?php _e('Start Over', 'lovable-exporter'); ?>
+                        <a href="?page=lovable-to-wordpress" class="button button-secondary">
+                            <?php _e('Start Over', 'lovable-to-wordpress'); ?>
                         </a>
                     </div>
                 </form>
             <?php else: ?>
                 <div class="notice notice-warning">
-                    <p><?php _e('No functionalities detected. You can still import the project without plugin recommendations.', 'lovable-exporter'); ?></p>
+                    <p><?php _e('No functionalities detected. You can still import the project without plugin recommendations.', 'lovable-to-wordpress'); ?></p>
                 </div>
             <?php endif; ?>
             
@@ -627,7 +627,7 @@ jQuery(document).ready(function($) {
         var totalFunctionalities = $('.lovable-functionality-card').length;
         
         if (checkedCount < totalFunctionalities) {
-            if (!confirm('<?php _e('Some functionalities have no plugin selected. Continue anyway?', 'lovable-exporter'); ?>')) {
+            if (!confirm('<?php _e('Some functionalities have no plugin selected. Continue anyway?', 'lovable-to-wordpress'); ?>')) {
                 e.preventDefault();
                 return false;
             }

@@ -35,7 +35,7 @@ class Lovable_ZIP_Analyzer {
      */
     public function analyze($zip_file_path) {
         if (!file_exists($zip_file_path)) {
-            return new WP_Error('file_not_found', __('ZIP file not found', 'lovable-exporter'));
+            return new WP_Error('file_not_found', __('ZIP file not found', 'lovable-to-wordpress'));
         }
         
         $this->zip_path = $zip_file_path;

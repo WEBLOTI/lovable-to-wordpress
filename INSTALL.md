@@ -16,21 +16,21 @@ Before installing, ensure you have:
 ### Method 1: Direct Upload (Recommended)
 
 1. **Prepare the Plugin**
-   - Download or locate the `lovable-exporter` folder
+   - Download or locate the `lovable-to-wordpress` folder
    - If you have a ZIP file, extract it first
 
 2. **Create ZIP File**
    ```bash
-   cd /path/to/lovable-exporter
+   cd /path/to/lovable-to-wordpress
    cd ..
-   zip -r lovable-exporter.zip lovable-exporter/
+   zip -r lovable-to-wordpress.zip lovable-to-wordpress/
    ```
 
 3. **Upload to WordPress**
    - Log in to your WordPress admin panel
    - Navigate to **Plugins > Add New**
    - Click the **Upload Plugin** button at the top
-   - Click **Choose File** and select `lovable-exporter.zip`
+   - Click **Choose File** and select `lovable-to-wordpress.zip`
    - Click **Install Now**
    - Wait for the upload and installation to complete
    - Click **Activate Plugin**
@@ -43,7 +43,7 @@ Before installing, ensure you have:
 
 2. **Upload Plugin Folder**
    - Navigate to `/wp-content/plugins/`
-   - Upload the entire `lovable-exporter` folder
+   - Upload the entire `lovable-to-wordpress` folder
    - Ensure all files and subdirectories are uploaded
 
 3. **Activate the Plugin**
@@ -58,10 +58,10 @@ Before installing, ensure you have:
 cd /path/to/wordpress
 
 # Copy plugin to plugins directory
-cp -r /path/to/lovable-exporter wp-content/plugins/
+cp -r /path/to/lovable-to-wordpress wp-content/plugins/
 
 # Activate the plugin
-wp plugin activate lovable-exporter
+wp plugin activate lovable-to-wordpress
 
 # Verify installation
 wp plugin list
@@ -72,13 +72,13 @@ wp plugin list
 ### 1. Verify Installation
 
 After activation, you should see:
-- **Lovable Exporter** menu item in WordPress admin sidebar
+- **Lovable to WordPress** menu item in WordPress admin sidebar
 - No error messages in the admin area
 - Plugin listed under **Plugins** with version 1.0.0
 
 ### 2. Check System Requirements
 
-Navigate to **Lovable Exporter > Help** to view:
+Navigate to **Lovable to WordPress > Help** to view:
 - WordPress version
 - PHP version
 - Elementor status
@@ -86,7 +86,7 @@ Navigate to **Lovable Exporter > Help** to view:
 
 ### 3. Configure Settings
 
-Go to **Lovable Exporter > Settings**:
+Go to **Lovable to WordPress > Settings**:
 
 - ✅ **Enable Animations** - Keep animations active (recommended)
 - ✅ **Lazy Loading** - Enable for better performance
@@ -96,7 +96,7 @@ Click **Save Changes**
 
 ### 4. Test the Plugin
 
-1. Go to **Lovable Exporter**
+1. Go to **Lovable to WordPress**
 2. In the **Export Design** tab, paste this test JSON:
 
 ```json
@@ -140,8 +140,8 @@ Click **Save Changes**
 **Error**: "The plugin does not have a valid header"
 
 **Solution**:
-- Ensure the `lovable-exporter.php` file is in the root of the plugin folder
-- Check that the folder structure is correct: `wp-content/plugins/lovable-exporter/lovable-exporter.php`
+- Ensure the `lovable-to-wordpress.php` file is in the root of the plugin folder
+- Check that the folder structure is correct: `wp-content/plugins/lovable-to-wordpress/lovable-to-wordpress.php`
 
 ### Missing Dependencies
 
@@ -168,10 +168,10 @@ Click **Save Changes**
 ```bash
 # Set correct permissions (via SSH)
 cd /path/to/wp-content/plugins
-chmod 755 lovable-exporter
-chmod 644 lovable-exporter/*.php
-chmod 755 lovable-exporter/assets
-chmod 644 lovable-exporter/assets/**/*
+chmod 755 lovable-to-wordpress
+chmod 644 lovable-to-wordpress/*.php
+chmod 755 lovable-to-wordpress/assets
+chmod 644 lovable-to-wordpress/assets/**/*
 ```
 
 ### Elementor Not Detected
@@ -182,7 +182,7 @@ chmod 644 lovable-exporter/assets/**/*
 1. Install Elementor from **Plugins > Add New**
 2. Search for "Elementor"
 3. Install and activate
-4. Refresh the Lovable Exporter page
+4. Refresh the Lovable to WordPress page
 
 ## Updating the Plugin
 
@@ -275,16 +275,16 @@ For developers who want to contribute:
 
 ```bash
 # Clone repository (if using Git)
-git clone https://github.com/yourusername/lovable-exporter.git
+git clone https://github.com/yourusername/lovable-to-wordpress.git
 
 # Navigate to WordPress plugins directory
 cd /path/to/wordpress/wp-content/plugins
 
 # Create symbolic link
-ln -s /path/to/lovable-exporter lovable-exporter
+ln -s /path/to/lovable-to-wordpress lovable-to-wordpress
 
 # Activate via WP-CLI
-wp plugin activate lovable-exporter
+wp plugin activate lovable-to-wordpress
 
 # Enable debug mode in wp-config.php
 define('WP_DEBUG', true);
@@ -320,7 +320,7 @@ services:
       WORDPRESS_DB_USER: wordpress
       WORDPRESS_DB_PASSWORD: wordpress
     volumes:
-      - ./lovable-exporter:/var/www/html/wp-content/plugins/lovable-exporter
+      - ./lovable-to-wordpress:/var/www/html/wp-content/plugins/lovable-to-wordpress
 ```
 
 ```bash
