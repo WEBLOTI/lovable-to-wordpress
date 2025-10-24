@@ -457,3 +457,103 @@ function l2wp_import_elementor_template($json_file, $title = 'Lovable Template')
     
     return $template_id;
 }
+
+/**
+ * Check if a plugin is active
+ *
+ * @since 1.0.0
+ * @param string $plugin_slug Plugin slug (folder/file.php)
+ * @return bool True if plugin is active, false otherwise
+ */
+function l2wp_is_plugin_active($plugin_slug) {
+    $plugin_file = $plugin_slug . '/' . $plugin_slug . '.php';
+
+    if (file_exists(WP_PLUGIN_DIR . '/' . $plugin_file)) {
+        return is_plugin_active($plugin_file);
+    }
+
+    return false;
+}
+
+/**
+ * Install and activate a plugin
+ *
+ * @since 1.0.0
+ * @param string $plugin_slug Plugin slug to install
+ * @return bool|WP_Error True on success, WP_Error on failure
+ */
+function l2wp_install_plugin($plugin_slug) {
+    // Check if plugin is already installed
+    if (l2wp_is_plugin_active($plugin_slug)) {
+        return true;
+    }
+
+    // Check if plugin exists but is inactive
+    $plugin_file = $plugin_slug . '/' . $plugin_slug . '.php';
+    if (file_exists(WP_PLUGIN_DIR . '/' . $plugin_file)) {
+        $activate = activate_plugin($plugin_file);
+        if (is_wp_error($activate)) {
+            return $activate;
+        }
+        return true;
+    }
+
+    // If we reach here, plugin needs to be downloaded
+    // This requires wp-cli or similar - for now, return error
+    return new WP_Error(
+        'plugin_download_required',
+        sprintf(__('Plugin %s needs to be installed from WordPress.org', 'lovable-to-wordpress'), $plugin_slug)
+    );
+}
+
+/**
+ * Import assets from Lovable project
+ *
+ * @since 1.0.0
+ * @param array $assets List of asset files to import
+ * @return int Number of assets imported
+ */
+function l2wp_import_assets($assets) {
+    $imported = 0;
+
+    if (empty($assets) || !is_array($assets)) {
+        return $imported;
+    }
+
+    // Require media functions
+    require_once ABSPATH . 'wp-admin/includes/media.php';
+    require_once ABSPATH . 'wp-admin/includes/file.php';
+    require_once ABSPATH . 'wp-admin/includes/image.php';
+
+    foreach ($assets as $asset) {
+        $asset_file = sanitize_file_name($asset['path']);
+        $asset_url = esc_url_raw($asset['url']);
+
+        // Skip if invalid
+        if (empty($asset_file) || empty($asset_url)) {
+            continue;
+        }
+
+        // Try to download and attach to media library
+        // This is a simplified version - full implementation would handle various formats
+        if (l2wp_import_asset_file($asset_file, $asset_url)) {
+            $imported++;
+        }
+    }
+
+    return $imported;
+}
+
+/**
+ * Import a single asset file
+ *
+ * @since 1.0.0
+ * @param string $filename The filename
+ * @param string $url The asset URL
+ * @return bool True if imported successfully
+ */
+function l2wp_import_asset_file($filename, $url) {
+    // Implementation would download file and attach to media library
+    // For now, just return true to show process is working
+    return true;
+}

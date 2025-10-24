@@ -271,7 +271,7 @@ if (!$analysis_result) {
                             <?php _e('Import to WordPress', 'lovable-to-wordpress'); ?>
                         </button>
                         
-                        <a href="?page=lovable-to-wordpress" class="button button-secondary">
+                        <a href="<?php echo add_query_arg('reset', '1', admin_url('admin.php?page=lovable-to-wordpress')); ?>" class="button button-secondary">
                             <?php _e('Start Over', 'lovable-to-wordpress'); ?>
                         </a>
                     </div>
