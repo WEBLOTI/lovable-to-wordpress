@@ -28,7 +28,14 @@ if (isset($_POST['lovable_analyze_zip']) && isset($_FILES['lovable_zip'])) {
     
     $zip_file = $_FILES['lovable_zip'];
     
-    if ($zip_file['error'] === UPLOAD_ERR_OK) {
+    // Validate ZIP file first
+    $validator = new L2WP_ZIP_Validator();
+    $validation_result = $validator->validate($zip_file);
+    
+    if (is_wp_error($validation_result)) {
+        // Show validation error
+        $analysis_result = $validation_result;
+    } elseif ($zip_file['error'] === UPLOAD_ERR_OK) {
         // Analyze ZIP
         $analyzer = new L2WP_ZIP_Analyzer();
         $analysis_result = $analyzer->analyze($zip_file['tmp_name']);
@@ -54,6 +61,33 @@ if (!$analysis_result) {
 
 <div class="wrap lovable-admin-wrap">
     <h1><?php echo esc_html(get_admin_page_title()); ?> <span class="lovable-version">v2.0</span></h1>
+    
+    <?php if (isset($_GET['import_status']) && $_GET['import_status'] === 'success'): ?>
+        <div class="notice notice-success is-dismissible">
+            <p>
+                <strong>✅ <?php _e('Import Completed Successfully!', 'lovable-to-wordpress'); ?></strong><br>
+                <?php 
+                if (isset($_GET['created_pages'])) {
+                    printf(__('%d pages created', 'lovable-to-wordpress'), (int)$_GET['created_pages']);
+                    echo ' | ';
+                }
+                if (isset($_GET['installed_plugins'])) {
+                    printf(__('%d plugins installed', 'lovable-to-wordpress'), (int)$_GET['installed_plugins']);
+                }
+                ?>
+            </p>
+        </div>
+    <?php endif; ?>
+    
+    <?php if (is_wp_error($analysis_result)): ?>
+        <div class="notice notice-error is-dismissible">
+            <p>
+                <strong>❌ <?php _e('Error', 'lovable-to-wordpress'); ?>:</strong>
+                <?php echo esc_html($analysis_result->get_error_message()); ?>
+            </p>
+        </div>
+        <?php $analysis_result = null; // Reset to show upload form ?>
+    <?php endif; ?>
     
     <?php if (!$analysis_result): ?>
         <!-- Step 1: Upload ZIP -->

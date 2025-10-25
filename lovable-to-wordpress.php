@@ -96,6 +96,7 @@ class L2WP_Main {
         require_once L2WP_PLUGIN_DIR . 'includes/class-l2wp-dynamic-tags.php';
 
         // Load v2 includes (ZIP-based system with intelligent detection)
+        require_once L2WP_PLUGIN_DIR . 'includes/class-l2wp-zip-validator.php';
         require_once L2WP_PLUGIN_DIR . 'includes/class-l2wp-zip-analyzer.php';
         require_once L2WP_PLUGIN_DIR . 'includes/class-l2wp-component-detector.php';
         require_once L2WP_PLUGIN_DIR . 'includes/class-l2wp-plugin-recommender.php';

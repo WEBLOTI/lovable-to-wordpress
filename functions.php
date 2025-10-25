@@ -483,7 +483,7 @@ function l2wp_is_plugin_active($plugin_slug) {
  * @return bool|WP_Error True on success, WP_Error on failure
  */
 function l2wp_install_plugin($plugin_slug) {
-    // Check if plugin is already installed
+    // Check if plugin is already installed and active
     if (l2wp_is_plugin_active($plugin_slug)) {
         return true;
     }
@@ -498,12 +498,48 @@ function l2wp_install_plugin($plugin_slug) {
         return true;
     }
 
-    // If we reach here, plugin needs to be downloaded
-    // This requires wp-cli or similar - for now, return error
-    return new WP_Error(
-        'plugin_download_required',
-        sprintf(__('Plugin %s needs to be installed from WordPress.org', 'lovable-to-wordpress'), $plugin_slug)
-    );
+    // Plugin needs to be downloaded from WordPress.org
+    require_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
+    require_once ABSPATH . 'wp-admin/includes/plugin-install.php';
+    require_once ABSPATH . 'wp-admin/includes/file.php';
+    require_once ABSPATH . 'wp-admin/includes/misc.php';
+
+    // Get plugin info from WordPress.org
+    $api = plugins_api('plugin_information', array(
+        'slug' => $plugin_slug,
+        'fields' => array('sections' => false)
+    ));
+
+    if (is_wp_error($api)) {
+        return new WP_Error(
+            'plugin_not_found',
+            sprintf(__('Plugin %s not found in WordPress.org repository', 'lovable-to-wordpress'), $plugin_slug)
+        );
+    }
+
+    // Install plugin
+    $skin = new WP_Ajax_Upgrader_Skin();
+    $upgrader = new Plugin_Upgrader($skin);
+    $result = $upgrader->install($api->download_link);
+
+    if (is_wp_error($result)) {
+        return $result;
+    }
+
+    if ($result === false) {
+        return new WP_Error(
+            'plugin_install_failed',
+            sprintf(__('Failed to install plugin %s', 'lovable-to-wordpress'), $plugin_slug)
+        );
+    }
+
+    // Activate the newly installed plugin
+    $activate = activate_plugin($plugin_file);
+    if (is_wp_error($activate)) {
+        return $activate;
+    }
+
+    return true;
 }
 
 /**
@@ -550,10 +586,37 @@ function l2wp_import_assets($assets) {
  * @since 1.0.0
  * @param string $filename The filename
  * @param string $url The asset URL
- * @return bool True if imported successfully
+ * @return int|bool Attachment ID on success, false on failure
  */
 function l2wp_import_asset_file($filename, $url) {
-    // Implementation would download file and attach to media library
-    // For now, just return true to show process is working
-    return true;
+    // Download file to temp location
+    $temp_file = download_url($url);
+    
+    if (is_wp_error($temp_file)) {
+        return false;
+    }
+
+    // Prepare file data
+    $file_array = array(
+        'name' => $filename,
+        'tmp_name' => $temp_file
+    );
+
+    // Import to media library
+    $attachment_id = media_handle_sideload($file_array, 0);
+
+    // Clean up temp file
+    if (file_exists($temp_file)) {
+        @unlink($temp_file);
+    }
+
+    if (is_wp_error($attachment_id)) {
+        return false;
+    }
+
+    // Mark as imported from Lovable
+    update_post_meta($attachment_id, '_l2wp_imported_asset', true);
+    update_post_meta($attachment_id, '_l2wp_import_timestamp', current_time('mysql'));
+
+    return $attachment_id;
 }
